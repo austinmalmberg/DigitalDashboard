@@ -1,7 +1,13 @@
 
 export default {
-  CLIENT_ID: null,  // ENTER OAUTH CLIENT ID HERE
-  API_KEY: null,  // ENTER API KEY HERE
+  google_calendar: {
+    CLIENT_ID: null,  // ENTER OAUTH CLIENT ID HERE
+    API_KEY: null,  // ENTER API KEY HERE
+  },
+
+  openweathermap: {
+    API_KEY: null
+  },
 
   general: {
 
@@ -12,7 +18,14 @@ export default {
   },
 
   calendar: {
-    daysToSync: 5,
-    syncInterval: 300 // in seconds
+    calendarId: null,
+    daysToSync: 7,  // styling done for <= 7 days ( 6 secondary days )
+    syncInterval: 60 // in seconds
+  },
+
+  weather: {
+    zip_code: '28037',
+    country: 'us',
+    syncInterval: 60 * 30 // in seconds
   }
 };
