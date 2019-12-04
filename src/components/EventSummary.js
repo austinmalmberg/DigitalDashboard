@@ -2,7 +2,7 @@ import React from 'react';
 
 const EventSummary = ({ summary }) => {
 
-  const maxLength = 28;
+  const maxLength = 32;
   if (summary.length > maxLength)
     summary = `${summary.substring(0, maxLength)}...`;
 

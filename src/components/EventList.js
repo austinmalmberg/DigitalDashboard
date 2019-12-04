@@ -2,21 +2,34 @@ import React from 'react';
 
 import Event from './Event';
 
-import { getDayInWeek, formatDate } from '../helpers/dateTime';
+import { formatTime } from '../helpers/dateTime';
 
-const EventList = ({ date, events, condensed }) => {
+const EventList = ({ events, compact }) => {
+
+  if (events.length === 0) {
+    return (
+      <div className="events muted">
+        <Event summary={ `Nothing scheduled. Video games?` } compact={ compact } />
+      </div>
+    );
+  }
+
+  if (events.length > 4 && compact) {
+    events.slice(0, 4);
+  }
 
   return (
-    <>
+    <div className="events">
       { events.map((event, key) => (
         <Event
           key={ key }
           summary={ event.summary }
-          startDate={ event.start.dateTime ? new Date(event.start.dateTime) : new Date(event.start.date) }
-          endDate={ event.end.dateTime ? new Date(event.end.dateTime) : new Date(event.end.date) }
+          startTime={ formatTime(new Date(event.start.dateTime || event.start.date)) }
+          endTime={ formatTime(new Date(event.end.dateTime || event.end.date)) }
+          compact={ compact }
         />
       ))}
-    </>
+    </div>
   );
 };
 

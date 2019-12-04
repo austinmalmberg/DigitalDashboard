@@ -1,5 +1,7 @@
 
-import config from './config';
+import config from '../config';
+
+import { addDays } from '../helpers/dateTime';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
@@ -9,13 +11,13 @@ const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 function loadApiClient(signInListener) {
-  window.gapi.load('client:auth2', async () => await initClient(signInListener));
+  window.gapi.load('client:auth2', () => initClient(signInListener));
 }
 
 async function initClient(signInListener) {
   await window.gapi.client.init({
-    apiKey: config.API_KEY,
-    clientId: config.CLIENT_ID,
+    apiKey: config.google_calendar.API_KEY,
+    clientId: config.google_calendar.CLIENT_ID,
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
   }).then(() => {
@@ -26,12 +28,12 @@ async function initClient(signInListener) {
   }).catch(console.log);
 }
 
-async function loadCalendarEvents(maxSyncDate, eventsListener) {
+async function loadCalendarEvents(eventsListener) {
 
   const response = await window.gapi.client.calendar.events.list({
-    'calendarId': 'primary',
+    'calendarId': config.calendar.calendarId,
     'timeMin': (new Date()).toISOString(),
-    'timeMax': maxSyncDate.toISOString(),
+    'timeMax': (addDays(new Date(), config.calendar.daysToSync)).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
     'orderBy': 'startTime'

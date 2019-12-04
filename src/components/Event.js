@@ -1,17 +1,24 @@
 import React from 'react';
 
+import EventTime from './EventTime';
 import EventSummary from './EventSummary';
 
-import { formatTime } from '../helpers/dateTime';
+const Event = ({ summary, startTime, endTime, compact }) => {
 
-const Event = ({ summary, startDate, endDate }) => {
+  if (startTime === undefined && endTime === undefined) {
+    return (
+      <div className={ compact ? "event--small" : "event" }>
+        <EventSummary summary={ summary } />
+      </div>
+    );
+  }
 
   return (
-    <div className={ "event"+ (endDate == null ? "--small" : "") } >
-      <div className="event--time">
-        <p>{ formatTime(startDate) }</p>
-        { endDate && <p>{ formatTime(endDate) }</p> }
-      </div>
+    <div className={ compact ? "event--small" : "event" }>
+      <EventTime
+        startTime={ startTime }
+        endTime={ compact ? null : endTime }
+      />
       <EventSummary summary={ summary } />
     </div>
   );

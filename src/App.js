@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
+import Clock from './components/Clock';
+import DayHeader from './components/DayHeader';
 import EventList from './components/EventList';
+import SecondaryEvents from './components/SecondaryEvents';
 
 import config from './config';
-import { loadApiClient, loadCalendarEvents } from './googleCalendarApi';
-import { dateFormats, formatTime, formatDate, getDayInWeek, isSameDate, addDays } from './helpers/dateTime';
+import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
+import { getCurrentWeather } from './apis/openWeatherMapApi';
+import { dateFormats, formatDate, getDayInWeek, isSameDate, addDays } from './helpers/dateTime';
 
 const App = () => {
 
@@ -12,22 +16,32 @@ const App = () => {
 
   const [ isAuthorized, setAuthorized ] = useState(false);
   const [ events, setEvents ] = useState([]);
-
-  // 2d array for separating events
-  const [ dailyEvents, setDailyEvents ] = useState([...Array(config.calendar.daysToSync).keys()].fill([]));
-
-  const maxSyncDate = addDays(date, config.calendar.daysToSync - 1);
+  const [ weather, setWeather ] = useState({
+    weather: {
+      main: "Unknown"
+    },
+    main: {
+      temp: 69,
+      temp_min: 69,
+      temp_max: 69
+    }
+  });
 
   // called once to load Google API
   useEffect(() => {
     loadApiClient(setAuthorized);
-  }, []);
 
-  useEffect(() => {
+    setDate(new Date());
     const timerId = setInterval(() => setDate(new Date()), 1000);
 
-    return () => clearInterval(timerId);
-  }, [date]);
+    getCurrentWeather(setWeather);
+    const weatherId = setInterval(() => getCurrentWeather(setWeather), config.weather.syncInterval * 1000);
+
+    return () => {
+      if (timerId) clearInterval(timerId);
+      if (weatherId) clearInterval(weatherId);
+    };
+  }, []);
 
   // listen for sign in
   useEffect(() => {
@@ -35,90 +49,43 @@ const App = () => {
     let intervalId;
 
     if (isAuthorized) {
-      loadCalendarEvents(maxSyncDate, setEvents);
-      intervalId = setInterval(() => loadCalendarEvents(maxSyncDate, setEvents), config.calendar.syncInterval * 1000);
+
+      loadCalendarEvents(setEvents);
+      intervalId = setInterval(() => loadCalendarEvents(setEvents), config.calendar.syncInterval * 1000);
     }
 
     // clean up interval
-    return () => clearInterval(intervalId);
-  }, [isAuthorized, maxSyncDate]);
-
-  // listen for events to change
-  useEffect(() => {
-    const d = new Date();
-    if (events.length > 0) {
-      const chop = parseEventsByDay(d, config.calendar.daysToSync, events).slice(0, config.calendar.daysToSync);
-      console.log(chop);
-      setDailyEvents(chop);
+    return () => {
+      if (intervalId) clearInterval(intervalId);
     }
-
-  }, [events]);
-
+  }, [isAuthorized]);
 
   return (
     <>
       <div className="left">
 
-        {/* clock */}
-        <div className="clock--panel">
-          <h1 className="clock">{ formatTime(date, config.clock.militaryTime) }</h1>
-        </div>
+        <Clock date={ date } />
 
-        {/* main calendar card */}
-        <div className="today">
-
-          {/* date */}
-          <div className="today--header">
-            <h2 className="today--day">{ getDayInWeek(date) }</h2>
-            <p className="today--date">{ formatDate(date, dateFormats.businessCasual) }</p>
-          </div>
-
-          {/* events container */}
-          <div className="today--events">
-            <EventList events={ dailyEvents[0] } />
-          </div>
+        {/* primary calendar card */}
+        <div className="primary">
+          <DayHeader date={ date } weather={ weather } />
+          <EventList events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, date)) } />
         </div>
 
       </div>
 
       {/* secondary calendar cards */}
       <div className="right">
-        <EventList events={ dailyEvents.slice(1).flatMap(arr => [...arr]) } condensed="true" />
+        { [...Array(config.calendar.daysToSync - 1).keys()].map(key => addDays(date, key + 1)).map((futureDate, key) => (
+          <SecondaryEvents
+            key={ key }
+            date={ futureDate }
+            events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, futureDate)) }
+          />
+        ))}
       </div>
     </>
   );
-}
-
-/**
- * @param {Object []} events - a list of events objects ordered by start date
-*/
-function parseEventsByDay(currentDate, numDays, events) {
-
-  // init a 2d array to hold daily events
-  const result = [[]];
-
-  let d = currentDate;
-  for (var i = 0; i < events.length; i++) {
-
-    const event = events[i];
-
-    let when = new Date(event.start.dateTime);
-    // this might not be necessary, but it was in Google's API example so I'm going to keep it in here
-    if (!when) {
-      when = new Date(event.start.date);
-    }
-
-    while (!isSameDate(when, d) || result.length < numDays) {
-      d = addDays(d, 1);
-
-      // create an empty event array for that day
-      result.push([]);
-    }
-
-    result[result.length - 1].push(event);
-  }
-
-  return result;
 }
 
 export default App;

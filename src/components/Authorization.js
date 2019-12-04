@@ -10,7 +10,7 @@ const Authorization = ({ isAuthorized }) => {
       window.gapi.auth2.getAuthInstance().signOut();
 
     // we have a listener on the sign in state through the api so no need to
-    // set a new isAuthorized state here
+    // set isAuthorized here
   }
 
   return (
