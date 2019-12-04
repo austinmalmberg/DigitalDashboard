@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 
 const Authorization = ({ isAuthorized }) => {
 
@@ -15,7 +14,7 @@ const Authorization = ({ isAuthorized }) => {
   }
 
   return (
-    <Button className="" onClick={ toggleAuthorize }>{ isAuthorized ? 'Unauthorize' : 'Authorize' }</Button>
+    <button className="" onClick={ toggleAuthorize }>{ isAuthorized ? 'Unauthorize' : 'Authorize' }</button>
   );
 };
 

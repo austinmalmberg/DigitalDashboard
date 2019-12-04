@@ -17,7 +17,7 @@ function formatTime(date, militaryTime, displaySecs) {
 
   const min = date.getMinutes().toString().padStart(2, '0');
   const secs = date.getSeconds().toString().padStart(2, '0');
-  const ampm = hour < 12 ? 'AM' : 'PM';
+  const ampm = date.getHours() < 12 ? 'AM' : 'PM';
 
   if (displaySecs)
     return `${hour}:${min}:${secs}${militaryTime ? '' : ' '+ampm}`;
@@ -64,4 +64,36 @@ function isSameDate(d1, d2) {
     d1.getDate() === d2.getDate();
 }
 
-export { dateFormats, formatTime, formatDate, getDayInWeek, isSameDate };
+/**
+ * Finds and returns the date from the given date by adding (or substracting)
+ * 12 hours at a time. Also sets the time to 11:59:01 pm
+ *
+ * This shouldn't be used if the numDays needs to be big.
+ *
+ * @param {Date} dateTime -
+ * @param {Number} numDays - the number of days from the given date. Can be
+ * positive or negative.
+*/
+function addDays(dateTime, numDays) {
+
+  const halfday = 1000 * 60 * 60 * 12 * Math.sign(numDays);
+
+  if (numDays < 0)
+    numDays *= -1;
+
+  while (numDays > 0) {
+    let day = dateTime.getDate();
+    dateTime = new Date(dateTime.getTime() + halfday);
+
+    if (dateTime.getDate() !== day)
+      --numDays;
+  }
+
+  dateTime.setHours(23);
+  dateTime.setMinutes(59);
+  dateTime.setSeconds(1);
+
+  return dateTime;
+}
+
+export { dateFormats, formatTime, formatDate, getDayInWeek, isSameDate, addDays };

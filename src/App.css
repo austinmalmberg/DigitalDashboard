@@ -1,0 +1,114 @@
+/* TODO: font-size based on # of events */
+
+/* GENERAL STYLING */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Segoe UI', Arial;
+  font-size: 30px;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+}
+
+/* main layout */
+
+main#root {
+  display: flex;
+  height: 100%;
+}
+
+main > * {
+  width: 50%;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+
+  border-right: 1px solid black;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+/* CLOCK */
+
+.clock--panel {
+  text-align: center;
+}
+
+.clock {
+  margin: 0.5rem 0;
+  font-size: 3rem;
+  font-weight: normal;
+}
+
+/* MAIN CALENDAR */
+
+.today {
+  flex-grow: 1;
+}
+
+.today--header {
+  padding: 0.5em 0;
+
+  text-align: center;
+
+  background-color: #30ABFF;
+}
+
+.today--day {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.today--date {
+  margin: 0.5rem 0;
+}
+
+
+/* SECONDARY CALENDAR  */
+
+
+
+/* EVENTS */
+
+.event, .event--small {
+  display: flex;
+  align-items: center;
+
+  margin: 0.25em 0;
+  padding: 0.25em 0.75em;
+}
+
+.event--small {
+  font-size: 16px;
+}
+
+.event--summary {
+  margin: 0;
+
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
+.event--time {
+  padding-right: 0.5em;
+  margin-right: 0.5em;
+
+  text-align: right;
+
+  border-right: 1px solid #ddd;
+}
+
+.event--time > * {
+  margin: 0;
+}

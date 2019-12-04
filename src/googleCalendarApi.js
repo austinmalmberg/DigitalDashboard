@@ -23,7 +23,7 @@ async function initClient(signInListener) {
     // change isAuthorized state when signed in status changes
     window.gapi.auth2.getAuthInstance().isSignedIn.listen(signInListener);
     signInListener(window.gapi.auth2.getAuthInstance().isSignedIn.get());
-  });
+  }).catch(console.log);
 }
 
 async function loadCalendarEvents(maxSyncDate, eventsListener) {

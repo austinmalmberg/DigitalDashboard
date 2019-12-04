@@ -1,71 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 import EventList from './components/EventList';
 
 import config from './config';
 import { loadApiClient, loadCalendarEvents } from './googleCalendarApi';
-import { dateFormats, formatTime, formatDate, getDayInWeek, isSameDate } from './helpers/dateTime';
+import { dateFormats, formatTime, formatDate, getDayInWeek, isSameDate, addDays } from './helpers/dateTime';
 
 const App = () => {
 
-  /* CALENDAR */
+  const [ date, setDate ] = useState(new Date());
 
   const [ isAuthorized, setAuthorized ] = useState(false);
-
   const [ events, setEvents ] = useState([]);
-  const [ todaysEvents, setTodaysEvents ] = useState([]);
-  const [ futureEvents, setFutureEvents ] = useState([]);
 
-  // load Google API script which was called from index.html
+  // 2d array for separating events
+  const [ dailyEvents, setDailyEvents ] = useState([...Array(config.calendar.daysToSync).keys()].fill([]));
+
+  const maxSyncDate = addDays(date, config.calendar.daysToSync - 1);
+
+  // called once to load Google API
   useEffect(() => {
     loadApiClient(setAuthorized);
   }, []);
-
-  // listen for sign in
-  useEffect(() => {
-
-    let intervalId;
-
-    if (isAuthorized) {
-      let maxSyncDate = new Date();
-      maxSyncDate.setDate(maxSyncDate.getDate() + config.calendar.daysToSync - 1);
-
-      loadCalendarEvents(maxSyncDate, setEvents);
-      intervalId = setInterval(() => loadCalendarEvents(maxSyncDate, setEvents), config.calendar.syncInterval * 1000);
-    }
-
-    return () => clearInterval(intervalId);
-  }, [isAuthorized]);
-
-  // listen for events to change
-  useEffect(() => {
-
-    if (events.length > 0) {
-      const today = new Date();
-
-      for (var i = 0; i < events.length; i++) {
-        const event = events[i];
-        let when = new Date(event.start.dateTime);
-        if (!when)
-          when = new Date(event.start.date);
-
-        if (!isSameDate(when, today))
-          break;
-      }
-
-      setTodaysEvents(events.slice(0, i));
-      setFutureEvents(events.slice(i));
-    }
-
-  }, [events]);
-
-
-  /* DATE AND TIME */
-
-  const [ date, setDate ] = useState(new Date());
 
   useEffect(() => {
     const timerId = setInterval(() => setDate(new Date()), 1000);
@@ -73,42 +29,96 @@ const App = () => {
     return () => clearInterval(timerId);
   }, [date]);
 
+  // listen for sign in
+  useEffect(() => {
+
+    let intervalId;
+
+    if (isAuthorized) {
+      loadCalendarEvents(maxSyncDate, setEvents);
+      intervalId = setInterval(() => loadCalendarEvents(maxSyncDate, setEvents), config.calendar.syncInterval * 1000);
+    }
+
+    // clean up interval
+    return () => clearInterval(intervalId);
+  }, [isAuthorized, maxSyncDate]);
+
+  // listen for events to change
+  useEffect(() => {
+    const d = new Date();
+    if (events.length > 0) {
+      const chop = parseEventsByDay(d, config.calendar.daysToSync, events).slice(0, config.calendar.daysToSync);
+      console.log(chop);
+      setDailyEvents(chop);
+    }
+
+  }, [events]);
 
 
   return (
     <>
-      <Container fluid="true" className="row bg-light">
-          <Col>
+      <div className="left">
 
-            {/* clock */}
-            <Row>
-              <h1 className="display-2 mx-auto">{ formatTime(date, config.clock.militaryTime) }</h1>
-            </Row>
+        {/* clock */}
+        <div className="clock--panel">
+          <h1 className="clock">{ formatTime(date, config.clock.militaryTime) }</h1>
+        </div>
 
-            {/* main calendar card */}
-            <Row className="Today d-flex flex-column border">
+        {/* main calendar card */}
+        <div className="today">
 
-              {/* date */}
-              <Col className="DateContainer bg-primary py-3 text-center">
-                <h2 className="display-4 my-0">{ formatDate(date, dateFormats.businessCasual) }</h2>
-                <h2 className="display-3 my-0">{ getDayInWeek(date) }</h2>
-              </Col>
+          {/* date */}
+          <div className="today--header">
+            <h2 className="today--day">{ getDayInWeek(date) }</h2>
+            <p className="today--date">{ formatDate(date, dateFormats.businessCasual) }</p>
+          </div>
 
-              {/* events container */}
-              <Col className="Events d-flex flex-column justify-content-start flex-grow-1">
-                <EventList events={ todaysEvents } />
-              </Col>
-            </Row>
+          {/* events container */}
+          <div className="today--events">
+            <EventList events={ dailyEvents[0] } />
+          </div>
+        </div>
 
-          </Col>
+      </div>
 
-          {/* secondary calendar cards */}
-          <Col>
-            <EventList events={ futureEvents } condensed="true" />
-          </Col>
-      </Container>
+      {/* secondary calendar cards */}
+      <div className="right">
+        <EventList events={ dailyEvents.slice(1).flatMap(arr => [...arr]) } condensed="true" />
+      </div>
     </>
   );
+}
+
+/**
+ * @param {Object []} events - a list of events objects ordered by start date
+*/
+function parseEventsByDay(currentDate, numDays, events) {
+
+  // init a 2d array to hold daily events
+  const result = [[]];
+
+  let d = currentDate;
+  for (var i = 0; i < events.length; i++) {
+
+    const event = events[i];
+
+    let when = new Date(event.start.dateTime);
+    // this might not be necessary, but it was in Google's API example so I'm going to keep it in here
+    if (!when) {
+      when = new Date(event.start.date);
+    }
+
+    while (!isSameDate(when, d) || result.length < numDays) {
+      d = addDays(d, 1);
+
+      // create an empty event array for that day
+      result.push([]);
+    }
+
+    result[result.length - 1].push(event);
+  }
+
+  return result;
 }
 
 export default App;
