@@ -24,6 +24,7 @@ export default {
   },
 
   weather: {
+    units: 'imperial',  // imperial or metric
     zip_code: '28037',
     country: 'us',
     syncInterval: 60 * 30 // in seconds

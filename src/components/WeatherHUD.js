@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import config from '../config';
+import { kConverter } from '../helpers/temperatures';
 
 const WeatherHUD = ({ date, weather }) => {
 
-  const { temp_max, temp, temp_min } = weather.main || null;
+  if (!weather || !weather.main ) {
+    return (
+      <div className="temperatures">
+        <p className="temp hi">Hi: { 69 }</p>
+        <p className="temp current">{ 69 }</p>
+        <p className="temp lo">Lo: { 69 }</p>
+      </div>
+    );
+  }
 
   return (
     <div className="temperatures">
-      <p className="temp hi">Hi: { temp_max || 69 }</p>
-      <p className="temp current">{ temp || 69 }</p>
-      <p className="temp lo">Lo: { temp_min || 69 }</p>
+      <p className="temp hi">Hi: { kConverter(weather.main.temp_max) }</p>
+      <p className="temp current">{ kConverter(weather.main.temp) }</p>
+      <p className="temp lo">Lo: { kConverter(weather.main.temp_min) }</p>
     </div>
   );
 };
