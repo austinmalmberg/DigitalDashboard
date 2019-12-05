@@ -1,13 +1,13 @@
 import React from 'react';
 
-import DayHeader from './DayHeader';
+import Header from './Header';
 import EventList from './EventList';
 
 const SecondaryEvents = ({ date, events }) => {
 
   return (
     <div className="secondary">
-      <DayHeader date={ date } />
+      <Header date={ date } compact="true" />
       <EventList events={ events } compact="true" />
     </div>
   );
