@@ -158,6 +158,9 @@ figure {
   flex-grow: 1;
 }
 
+.temp::after {
+  content: '°';
+}
 
 /* SECONDARY CALENDAR  */
 
