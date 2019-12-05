@@ -3,11 +3,11 @@ import React from 'react';
 import Header from './Header';
 import EventList from './EventList';
 
-const SecondaryEvents = ({ date, events }) => {
+const SecondaryEvents = ({ date, events, weather }) => {
 
   return (
     <div className="secondary">
-      <Header date={ date } compact="true" />
+      <Header date={ date } compact="true" weather={ weather }/>
       <EventList events={ events } compact="true" />
     </div>
   );

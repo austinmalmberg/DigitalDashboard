@@ -2,16 +2,14 @@ import React from 'react';
 
 const Weather = ({ weather }) => {
 
-  const { min, max, current } = weather.temp;
-
   return (
     <div className="weather">
       <div className="temperatures">
-        <p className="temp hi">Hi: { Math.round(max) }</p>
-        { current && <p className="temp current">{ Math.round(current) }</p> }
-        <p className="temp lo">Lo: { Math.round(min) }</p>
+        { weather.max && <p className="temp hi">Hi: { Math.round(weather.max) }</p> }
+        { weather.current && <p className="temp current">{ Math.round(weather.current) }</p> }
+        { weather.min && <p className="temp lo">Lo: { Math.round(weather.min) }</p> }
       </div>
-      { weather.image_src && <img src={ weather.image_src } alt="weather" /> }
+      { weather.image_src && <img src={ weather.image_src } alt="weather-icon" /> }
     </div>
   );
 };

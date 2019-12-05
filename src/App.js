@@ -4,8 +4,10 @@ import Clock from './components/Clock';
 import PrimaryCalendar from './components/PrimaryCalendar';
 import SecondaryEvents from './components/SecondaryEvents';
 
-import config from './config';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
+import { getDarkSkyWeather } from './apis/darkSkyApi';
+
+import config from './config';
 import { isSameDate, addDays } from './helpers/dateTime';
 
 const App = () => {
@@ -14,20 +16,43 @@ const App = () => {
 
   const [ isAuthorized, setAuthorized ] = useState(false);
   const [ events, setEvents ] = useState([]);
+  const [ weather, setWeather ] = useState({
+    currently: {
+      summary: '',
+      icon: '',
+      temperature: 69
+    },
+    daily: {
+      data: [
+        {
+          summary: '',
+          icon: '',
+          temperatureHigh: 69,
+          temperatureLow: 69
+        } // ...
+      ]
+    }
+  });
 
-  // called once to load Google API
+  // called once to load Google Calendar and Dark Sky APIs
   useEffect(() => {
     loadApiClient(setAuthorized);
 
     setDate(new Date());
     const timerId = setInterval(() => setDate(new Date()), 1000);
 
+    getDarkSkyWeather(setWeather);
+    const weatherId = setInterval(async () => {
+      getDarkSkyWeather(setWeather)
+    }, config.weather.syncInterval * 1000);
+
     return () => {
       if (timerId) clearInterval(timerId);
+      if (weatherId) clearInterval(weatherId);
     };
   }, []);
 
-  // listen for sign in
+  // listen for Google OAUTH sign in
   useEffect(() => {
 
     let intervalId;
@@ -50,20 +75,26 @@ const App = () => {
 
         <Clock date={ date } />
 
-        {/* primary calendar card */}
-        <PrimaryCalendar date={ date } events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, date)) } />
+        <PrimaryCalendar
+          date={ date }
+          events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, date)) }
+          weather={ { min: weather.daily.data[0].temperatureLow, max: weather.daily.data[0].temperatureHigh, current: weather.currently.temperature } }
+        />
 
       </div>
 
-      {/* secondary calendar cards */}
       <div className="right">
+
+        {/* map numbers from 0 - daysToSync to their respective date then create SecondaryEvent components from these dates */}
         { [...Array(config.calendar.daysToSync - 1).keys()].map(key => addDays(date, key + 1)).map((futureDate, key) => (
           <SecondaryEvents
             key={ key }
             date={ futureDate }
             events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, futureDate)) }
+            // weather={ { min: weather.daily.data[key].temperatureLow, max: weather.daily.data[key].temperatureHigh } }
           />
         ))}
+
       </div>
     </>
   );
