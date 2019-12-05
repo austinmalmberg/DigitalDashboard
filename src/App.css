@@ -8,7 +8,7 @@
 
 html {
   font-family: 'Segoe UI', Arial;
-  font-size: 32px;
+  font-size: 2vw;
 }
 
 body {
@@ -129,7 +129,7 @@ figure {
 /* weather */
 
 .primary .weather {
-  width: 25%;
+  width: 50%;
 }
 
 .secondary .weather {
@@ -139,7 +139,7 @@ figure {
 .weather {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 
   font-size: 0.7em;
 }
@@ -165,7 +165,7 @@ figure {
 /* SECONDARY CALENDAR  */
 
 .secondary {
-  font-size: 16px;
+  font-size: 0.5rem;
   display: flex;
 
   padding: 0 0.75em;
