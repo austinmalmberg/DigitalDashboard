@@ -8,7 +8,7 @@ import SecondaryEvents from './components/SecondaryEvents';
 import config from './config';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
 import { getCurrentWeather } from './apis/openWeatherMapApi';
-import { dateFormats, formatDate, getDayInWeek, isSameDate, addDays } from './helpers/dateTime';
+import { isSameDate, addDays } from './helpers/dateTime';
 
 const App = () => {
 
