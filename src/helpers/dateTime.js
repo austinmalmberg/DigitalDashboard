@@ -3,6 +3,7 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const dateFormats = {
+  shortest: '0/0',
   short: '0/0/00',
   longerButStillShort: '00/00/0000',
   businessCasual: 'mon 0, 0000',
@@ -35,6 +36,8 @@ function formatDate(date, format) {
   const year = date.getFullYear();
 
   switch(format) {
+    case dateFormats.shortest:
+      return `${month}/${day}`;
     case dateFormats.short:
       return `${month}/${day}/${year.toString().substring(year.length - 2)}`;
     case dateFormats.longerButStillShort:

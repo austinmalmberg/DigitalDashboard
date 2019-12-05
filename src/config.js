@@ -1,14 +1,5 @@
 
 export default {
-  google_calendar: {
-    CLIENT_ID: null,  // ENTER OAUTH CLIENT ID HERE
-    API_KEY: null,  // ENTER API KEY HERE
-  },
-
-  openweathermap: {
-    API_KEY: null
-  },
-
   general: {
 
   },
@@ -18,15 +9,19 @@ export default {
   },
 
   calendar: {
-    calendarId: null,
+    calendarId: '5u6lidgv1kp59e0i007hmksd94@group.calendar.google.com',
     daysToSync: 7,  // styling done for <= 7 days ( 6 secondary days )
     syncInterval: 60 // in seconds
   },
 
   weather: {
-    units: 'imperial',  // imperial or metric
+    units: 'imperial',  // imperial, metric, kelvin
     zip_code: '28037',
+    location: {
+      lat: 35.501,
+      long: -81.004
+    },
     country: 'us',
-    syncInterval: 60 * 30 // in seconds
+    syncInterval: 20 // in seconds
   }
 };
