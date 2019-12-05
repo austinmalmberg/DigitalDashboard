@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 import Clock from './components/Clock';
-import DayHeader from './components/DayHeader';
-import EventList from './components/EventList';
+import PrimaryCalendar from './components/PrimaryCalendar';
 import SecondaryEvents from './components/SecondaryEvents';
 
 import config from './config';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
-import { getCurrentWeather } from './apis/openWeatherMapApi';
 import { isSameDate, addDays } from './helpers/dateTime';
 
 const App = () => {
@@ -16,16 +14,6 @@ const App = () => {
 
   const [ isAuthorized, setAuthorized ] = useState(false);
   const [ events, setEvents ] = useState([]);
-  const [ weather, setWeather ] = useState({
-    weather: {
-      main: "Unknown"
-    },
-    main: {
-      temp: 69,
-      temp_min: 69,
-      temp_max: 69
-    }
-  });
 
   // called once to load Google API
   useEffect(() => {
@@ -34,12 +22,8 @@ const App = () => {
     setDate(new Date());
     const timerId = setInterval(() => setDate(new Date()), 1000);
 
-    getCurrentWeather(setWeather);
-    const weatherId = setInterval(() => getCurrentWeather(setWeather), config.weather.syncInterval * 1000);
-
     return () => {
       if (timerId) clearInterval(timerId);
-      if (weatherId) clearInterval(weatherId);
     };
   }, []);
 
@@ -67,10 +51,7 @@ const App = () => {
         <Clock date={ date } />
 
         {/* primary calendar card */}
-        <div className="primary">
-          <DayHeader date={ date } weather={ weather } />
-          <EventList events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, date)) } />
-        </div>
+        <PrimaryCalendar date={ date } events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, date)) } />
 
       </div>
 
