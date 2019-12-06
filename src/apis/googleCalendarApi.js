@@ -10,12 +10,14 @@ const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v
 // included, separated by spaces.
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
+const gapi = window.gapi;
+
 function loadApiClient(signInListener) {
-  window.gapi.load('client:auth2', () => initClient(signInListener));
+  gapi.load('client:auth2', () => initClient(signInListener));
 }
 
 async function initClient(signInListener) {
-  await window.gapi.client.init({
+  await gapi.client.init({
     apiKey: process.env.GOOGLE_CALENDAR_API_KEY,
     clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
     discoveryDocs: DISCOVERY_DOCS,
@@ -23,14 +25,14 @@ async function initClient(signInListener) {
   }).then(() => {
 
     // change isAuthorized state when signed in status changes
-    window.gapi.auth2.getAuthInstance().isSignedIn.listen(signInListener);
-    signInListener(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+    gapi.auth2.getAuthInstance().isSignedIn.listen(signInListener);
+    signInListener(gapi.auth2.getAuthInstance().isSignedIn.get());
   }).catch(console.log);
 }
 
 async function loadCalendarEvents(eventsListener) {
 
-  const response = await window.gapi.client.calendar.events.list({
+  const response = await gapi.client.calendar.events.list({
     'calendarId': config.calendar.calendarId,
     'timeMin': (new Date()).toISOString(),
     'timeMax': (addDays(new Date(), config.calendar.daysToSync)).toISOString(),
