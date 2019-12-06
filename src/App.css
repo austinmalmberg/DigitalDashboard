@@ -1,10 +1,6 @@
-/* TODO: font-size based on # of events */
+/* TODO: long event summaries shrink secondary header width */
 
 /* GENERAL STYLING */
-
-* {
-  border: 1px solid red;
-}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -57,10 +53,10 @@ figure {
 }
 
 
-/* borders */
+/* BORDERS */
 
 .event--time, .secondary .header {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid black;
 }
 
 
@@ -85,10 +81,16 @@ figure {
 .clock {
   margin: 1.5rem 0;
   font-size: 4rem;
-  font-weight: normal;
+  /* font-weight: normal; */
 
   color: white;
+
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  text-shadow:
+       -3px 3px 0 #000;
 }
+
 
 /* MAIN CALENDAR */
 
@@ -96,57 +98,12 @@ figure {
   flex-grow: 1;
 }
 
-.temp::after {
-  content: '°';
-}
 
 /* SECONDARY CALENDAR  */
 
 .secondary {
   font-size: 0.5rem;
   display: flex;
-}
-
-
-/* EVENTS */
-
-.secondary .events {
-  flex-grow: 1;
-}
-
-.event, .event--small {
-  display: flex;
-  align-items: center;
-
-  width: 100%;
-
-  margin: 0.25em 0.75em;
-  padding: 0.25em 0;
-
-  opacity: 1;
-  animation: fadeinout 2s linear;
-}
-
-.event--summary {
-  width: 100%;
-
-  margin: 0;
-
-  font-size: 1.5em;
-  font-weight: normal;
-
-  text-overflow: ellipsis;
-}
-
-.event--time {
-  margin-right: 0.5em;
-
-  min-width: 20%;
-  text-align: right;
-}
-
-.event--time > * {
-  margin: 0;
 }
 
 
@@ -174,6 +131,9 @@ figure {
   text-align: center;
 
   background-color: white;
+
+  border: 1px solid black;
+  box-shadow: -0.05rem 0.05rem 0.1rem;
   border-radius: 0.2rem;
 }
 
@@ -198,22 +158,57 @@ figure {
   width: 25%;
 }
 
-/* weather */
 
-/* .primary .weather {
-  width: 50%;
+/* EVENTS */
+
+.secondary .events {
+  flex-grow: 1;
 }
 
-.secondary .weather {
-  width: 100%;
-} */
+.event, .event--small {
+  display: flex;
+  align-items: center;
+
+  margin: 0.25em 0.75em;
+  padding: 0.25em 0;
+
+  opacity: 1;
+  animation: fadeinout 2s linear;
+}
+
+.event--summary {
+  margin: 0;
+
+  font-size: 1.5em;
+  font-weight: normal;
+
+  text-align: left;
+}
+
+.event--time {
+  padding-right: 0.25em;
+  margin-right: 0.75em;
+
+  text-align: right;
+}
+
+.event--time > * {
+  margin: 0;
+
+  white-space: nowrap;
+}
+
+
+/* WEATHER */
 
 .weather {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 0.7em;
+  margin-left: 1.5em;
+
+  font-size: 0.8em;
 }
 
 .temperatures {
@@ -223,6 +218,10 @@ figure {
 
 .temperatures * {
   margin: 0;
+}
+
+.temp::after {
+  content: '°';
 }
 
 .weather--canvas {
