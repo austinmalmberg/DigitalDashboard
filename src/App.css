@@ -208,3 +208,8 @@ figure {
 .event--time > * {
   margin: 0;
 }
+
+.weather--canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
