@@ -12,6 +12,7 @@ import { isSameDate, addDays } from './helpers/dateTime';
 
 const App = () => {
 
+  // updates daily via the Clock component
   const [ date, setDate ] = useState(new Date());
 
   const [ isAuthorized, setAuthorized ] = useState(false);
@@ -38,16 +39,12 @@ const App = () => {
   useEffect(() => {
     loadApiClient(setAuthorized);
 
-    setDate(new Date());
-    const timerId = setInterval(() => setDate(new Date()), 1000);
-
     getDarkSkyWeather(setWeather);
     const weatherId = setInterval(async () => {
       getDarkSkyWeather(setWeather)
     }, config.weather.syncInterval * 1000);
 
     return () => {
-      if (timerId) clearInterval(timerId);
       if (weatherId) clearInterval(weatherId);
     };
   }, []);
@@ -73,7 +70,7 @@ const App = () => {
     <>
       <div className="left">
 
-        <Clock date={ date } />
+        <Clock date={ date } setDate={ setDate } />
 
         <PrimaryCalendar
           date={ date }

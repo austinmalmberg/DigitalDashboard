@@ -62,6 +62,8 @@ function getDayInWeek(date, format) {
 }
 
 function isSameDate(d1, d2) {
+  if (!d1 || !d2) return false;
+
   if (!(d1 instanceof Date))
     d1 = new Date(d1);
 
