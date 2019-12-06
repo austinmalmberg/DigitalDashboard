@@ -22,7 +22,7 @@ export default {
       long: -81.004
     },
     country: 'us',  // used by dark sky
-    syncInterval: 60 * 30, // in seconds, used to make api calls
+    syncInterval: 0.1, // in minutes, used to make api calls
     cacheAge: 20 // in minutes
   }
 };

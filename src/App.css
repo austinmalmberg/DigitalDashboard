@@ -105,16 +105,16 @@ figure {
   text-align: center;
 }
 
-.primary .day--info {
+.primary .info {
   width: 60%;
 }
 
-.day--info * {
+.info * {
   margin: 0;
   padding: 0;
 }
 
-.day--info .day, .temperatures .current {
+.info .day, .temperatures .current {
   font-size: 2em;
   font-weight: bold;
 }

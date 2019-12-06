@@ -1,15 +1,22 @@
 import React from 'react';
 
-const Weather = ({ weather }) => {
+const Weather = ({ currentWeather, forecastData }) => {
+
+  if (!forecastData) {
+    return (
+      <div className="weather">
+        <p>No weather data</p>
+      </div>
+    );
+  }
 
   return (
     <div className="weather">
       <div className="temperatures">
-        { weather.max && <p className="temp hi">Hi: { Math.round(weather.max) }</p> }
-        { weather.current && <p className="temp current">{ Math.round(weather.current) }</p> }
-        { weather.min && <p className="temp lo">Lo: { Math.round(weather.min) }</p> }
+        <p className="temp hi">Hi: { Math.round(forecastData.temperatureHigh) }</p>
+        { currentWeather && <p className="temp current">{ Math.round(currentWeather.temperature) }</p> }
+        <p className="temp lo">Lo: { Math.round(forecastData.temperatureLow) }</p>
       </div>
-      { weather.image_src && <img src={ weather.image_src } alt="weather-icon" /> }
     </div>
   );
 };

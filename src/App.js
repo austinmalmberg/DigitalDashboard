@@ -17,32 +17,24 @@ const App = () => {
 
   const [ isAuthorized, setAuthorized ] = useState(false);
   const [ events, setEvents ] = useState([]);
-  const [ weather, setWeather ] = useState({
-    currently: {
-      summary: '',
-      icon: '',
-      temperature: 69
-    },
-    daily: {
-      data: [
-        {
-          summary: '',
-          icon: '',
-          temperatureHigh: 69,
-          temperatureLow: 69
-        } // ...
-      ]
-    }
-  });
+  const [ currentWeather, setCurrentWeather ] = useState({ temperature: 69 });
+
+  const [ forecastData, setForecastData ] = useState([]);
 
   // called once to load Google Calendar and Dark Sky APIs
   useEffect(() => {
+    // updates authorization state when google calendar api is loaded
     loadApiClient(setAuthorized);
 
-    getDarkSkyWeather(setWeather);
-    const weatherId = setInterval(async () => {
-      getDarkSkyWeather(setWeather)
-    }, config.weather.syncInterval * 1000);
+    async function updateWeather() {
+      const { currently, daily } = await getDarkSkyWeather();
+
+      setCurrentWeather(currently);
+      setForecastData(daily.data);
+    }
+
+    updateWeather();
+    const weatherId = setInterval(updateWeather, config.weather.syncInterval * 60 * 1000);
 
     return () => {
       if (weatherId) clearInterval(weatherId);
@@ -75,7 +67,8 @@ const App = () => {
         <PrimaryCalendar
           date={ date }
           events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, date)) }
-          weather={ { min: weather.daily.data[0].temperatureLow, max: weather.daily.data[0].temperatureHigh, current: weather.currently.temperature } }
+          currentWeather={ currentWeather }
+          forecastData = { forecastData[0] }
         />
 
       </div>
@@ -88,7 +81,7 @@ const App = () => {
             key={ key }
             date={ futureDate }
             events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, futureDate)) }
-            // weather={ { min: weather.daily.data[key].temperatureLow, max: weather.daily.data[key].temperatureHigh } }
+            forecastData = { forecastData[key + 1] }
           />
         ))}
 

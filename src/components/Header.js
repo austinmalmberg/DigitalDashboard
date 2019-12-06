@@ -4,7 +4,7 @@ import Weather from './Weather';
 
 import { dateFormats, getDayInWeek, formatDate } from '../helpers/dateTime';
 
-const Header = ({ date, weather, compact }) => {
+const Header = ({ date, currentWeather, forecastData, compact }) => {
 
   const dateFormat = compact ?
     dateFormats.shortest :
@@ -12,8 +12,8 @@ const Header = ({ date, weather, compact }) => {
 
   return (
     <div className="header">
-      { weather && <Weather weather={ weather } /> }
-      <div className="day--info">
+      <Weather currentWeather={ currentWeather } forecastData={ forecastData } />
+      <div className="info">
         <h2 className="day">{ getDayInWeek(date) }</h2>
         <p className="date">{ formatDate(date, dateFormat) }</p>
       </div>
