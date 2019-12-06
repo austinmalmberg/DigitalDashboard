@@ -2,18 +2,25 @@
 
 /* GENERAL STYLING */
 
+* {
+  border: 1px solid red;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Segoe UI', Arial;
+  font-family: 'Roboto', 'Segoe UI', Arial;
   font-size: 2vw;
 }
 
 body {
-  margin: 0;
   height: 100vh;
+
+  margin: 0;
+
+  background-color: #999;
 }
 
 .muted {
@@ -30,6 +37,7 @@ main#root {
 
 main > * {
   width: 50%;
+  padding: 0.4em;
 
   display: flex;
   flex-direction: column;
@@ -45,8 +53,7 @@ figure {
 }
 
 .right {
-  border-left: 0.4em solid black;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 
@@ -79,9 +86,71 @@ figure {
   margin: 1.5rem 0;
   font-size: 4rem;
   font-weight: normal;
+
+  color: white;
 }
 
-/* DAY HEADERS */
+/* MAIN CALENDAR */
+
+.primary {
+  flex-grow: 1;
+}
+
+.temp::after {
+  content: '°';
+}
+
+/* SECONDARY CALENDAR  */
+
+.secondary {
+  font-size: 0.5rem;
+  display: flex;
+}
+
+
+/* EVENTS */
+
+.secondary .events {
+  flex-grow: 1;
+}
+
+.event, .event--small {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  margin: 0.25em 0.75em;
+  padding: 0.25em 0;
+
+  opacity: 1;
+  animation: fadeinout 2s linear;
+}
+
+.event--summary {
+  width: 100%;
+
+  margin: 0;
+
+  font-size: 1.5em;
+  font-weight: normal;
+
+  text-overflow: ellipsis;
+}
+
+.event--time {
+  margin-right: 0.5em;
+
+  min-width: 20%;
+  text-align: right;
+}
+
+.event--time > * {
+  margin: 0;
+}
+
+
+/* HEADERS */
 
 .header {
   display: flex;
@@ -98,11 +167,14 @@ figure {
 .primary .header {
   padding: 1em 0;
 
-  background-color: #30ABFF;
+  border-bottom: 2px solid #ddd;
 }
 
 .primary, .secondary {
   text-align: center;
+
+  background-color: white;
+  border-radius: 0.2rem;
 }
 
 .primary .info {
@@ -128,13 +200,13 @@ figure {
 
 /* weather */
 
-.primary .weather {
+/* .primary .weather {
   width: 50%;
 }
 
 .secondary .weather {
-  width: 60%;
-}
+  width: 100%;
+} */
 
 .weather {
   display: flex;
@@ -146,66 +218,10 @@ figure {
 
 .temperatures {
   height: 100%;
+  width: 100%;
 }
 
 .temperatures * {
-  margin: 0;
-}
-
-/* MAIN CALENDAR */
-
-.primary {
-  flex-grow: 1;
-}
-
-.temp::after {
-  content: '°';
-}
-
-/* SECONDARY CALENDAR  */
-
-.secondary {
-  font-size: 0.5rem;
-  display: flex;
-
-  padding: 0 0.75em;
-}
-
-
-/* EVENTS */
-
-.secondary .events {
-  flex-grow: 1;
-}
-
-.event, .event--small {
-  display: flex;
-  align-items: center;
-
-  width: 100%;
-
-  margin: 0.25em 0;
-  padding: 0.25em 0.75em;
-
-  opacity: 1;
-  animation: fadeinout 2s linear;
-}
-
-.event--summary {
-  margin: 0;
-
-  font-size: 1.5em;
-  font-weight: normal;
-}
-
-.event--time {
-  padding-right: 0.5em;
-  margin-right: 0.5em;
-
-  text-align: right;
-}
-
-.event--time > * {
   margin: 0;
 }
 
