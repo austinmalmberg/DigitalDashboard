@@ -8,10 +8,11 @@
 
 html {
   font-family: 'Roboto', 'Segoe UI', Arial;
-  font-size: 2vw;
+  font-size: 1.6vw;
 }
 
 body {
+  max-height: 100vh;
   height: 100vh;
 
   margin: 0;
@@ -156,6 +157,7 @@ figure {
 
   margin: 0;
   width: 25%;
+  min-width: 25%;
 }
 
 
@@ -207,8 +209,6 @@ figure {
   justify-content: center;
 
   margin-left: 1.5em;
-
-  font-size: 0.8em;
 }
 
 .temperatures {
