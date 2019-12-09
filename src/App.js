@@ -4,6 +4,7 @@ import Clock from './components/Clock';
 import PrimaryCalendar from './components/PrimaryCalendar';
 import SecondaryEvents from './components/SecondaryEvents';
 
+import getLocation from './apis/geolocation';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
 import { getDarkSkyWeather } from './apis/darkSkyApi';
 
@@ -17,8 +18,9 @@ const App = () => {
 
   const [ isAuthorized, setAuthorized ] = useState(false);
   const [ events, setEvents ] = useState([]);
-  const [ currentWeather, setCurrentWeather ] = useState({ temperature: 69 });
+  const [ currentWeather, setCurrentWeather ] = useState(null);
 
+  const [ location, setLocation ] = useState(null);
   const [ forecastData, setForecastData ] = useState([]);
 
   // called once to load Google Calendar and Dark Sky APIs
@@ -26,20 +28,31 @@ const App = () => {
     // updates authorization state when google calendar api is loaded
     loadApiClient(setAuthorized);
 
-    async function updateWeather() {
-      const { currently, daily } = await getDarkSkyWeather();
-
-      setCurrentWeather(currently);
-      setForecastData(daily.data);
-    }
-
-    updateWeather();
-    const weatherId = setInterval(updateWeather, config.weather.syncInterval * 60 * 1000);
-
-    return () => {
-      if (weatherId) clearInterval(weatherId);
-    };
+    getLocation(setLocation, console.log);
   }, []);
+
+  useEffect(() => {
+    if (location !== null) {
+
+      async function updateWeather() {
+        const { currently, daily } = await getDarkSkyWeather(location);
+
+        setCurrentWeather(currently);
+
+        if (daily) {
+          setForecastData(daily.data);
+        }
+      }
+
+      updateWeather();
+      const weatherId = setInterval(updateWeather, config.weather.syncInterval * 60 * 1000);
+
+      return () => {
+        if (weatherId) clearInterval(weatherId);
+      };
+
+    }
+  }, [location]);
 
   // listen for Google OAUTH sign in
   useEffect(() => {

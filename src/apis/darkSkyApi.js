@@ -1,12 +1,11 @@
 
-import config from '../config';
+async function getDarkSkyWeather(location, callback) {
 
-// dark sky does not allow cross-site origin requests
+  const { latitude, longitude } = location;
 
-async function getDarkSkyWeather(callback) {
-  const response = await fetch(`/darkskyapi/${config.weather.cacheAge}`, {
+  const response = await fetch(`/darksky`, {
     method: 'POST',
-    body: JSON.stringify(config.weather.location),
+    body: JSON.stringify({ latitude, longitude }),
     headers: {
       'Content-Type': 'application/json'
     }
