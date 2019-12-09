@@ -1,5 +1,5 @@
 
-async function getDarkSkyWeather(location, callback) {
+async function getWeather(location, callback, error) {
 
   const { latitude, longitude } = location;
 
@@ -11,13 +11,16 @@ async function getDarkSkyWeather(location, callback) {
     }
   });
 
-  const data = await response.json();
+  let data;
+  if (response.status === 200) {
+    data = await response.json();
+  }
 
-  if (callback)
+  if (callback) {
     callback(data);
-  else {
+  } else {
     return data;
   }
 }
 
-export { getDarkSkyWeather };
+export default getWeather;
