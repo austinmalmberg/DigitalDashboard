@@ -20,6 +20,9 @@ function formatTime(date, militaryTime, displaySecs) {
   const secs = date.getSeconds().toString().padStart(2, '0');
   const ampm = date.getHours() < 12 ? 'AM' : 'PM';
 
+  if (hour === 0)
+    hour = 12;
+
   if (displaySecs)
     return `${hour}:${min}:${secs}${militaryTime ? '' : ' '+ampm}`;
 
