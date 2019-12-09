@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import setSkycon from '../helpers/skycons';
 
-const Weather = ({ currentWeather, forecastData }) => {
+const Weather = ({ currentWeather, forecastData, compact }) => {
 
   const [ icon, setIcon ] = useState('');
   const canvas = useRef(null);
@@ -12,7 +12,9 @@ const Weather = ({ currentWeather, forecastData }) => {
       setIcon(forecastData.icon);
       setSkycon(canvas.current, forecastData.icon);
     }
-  }, [forecastData]);
+  }, [forecastData, icon]);
+
+  const canvasDimensions = compact ? 100 : 150;
 
   if (!forecastData) {
     return (
@@ -30,7 +32,7 @@ const Weather = ({ currentWeather, forecastData }) => {
         <p className="temp lo">Lo: { Math.round(forecastData.temperatureLow) }</p>
       </div>
       <figure className="icon">
-        <canvas ref={ canvas } className="weather--canvas"></canvas>
+        <canvas ref={ canvas } className="weather--canvas" width={ canvasDimensions } height={ canvasDimensions }></canvas>
       </figure>
     </div>
   );

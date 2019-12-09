@@ -9,7 +9,7 @@ const EventList = ({ events, compact }) => {
   if (events.length === 0) {
     return (
       <div className="events muted">
-        <Event summary={ `Nothing scheduled. Video games?` } compact={ compact } />
+        <Event summary={ `Nothing scheduled` } compact={ compact } />
       </div>
     );
   }

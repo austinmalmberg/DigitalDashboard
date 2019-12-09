@@ -12,11 +12,11 @@ const Header = ({ date, currentWeather, forecastData, compact }) => {
 
   return (
     <div className="header">
-      <Weather currentWeather={ currentWeather } forecastData={ forecastData } />
       <div className="info">
         <h2 className="day">{ getDayInWeek(date) }</h2>
         <p className="date">{ formatDate(date, dateFormat) }</p>
       </div>
+      <Weather currentWeather={ currentWeather } forecastData={ forecastData } compact={ compact } />
     </div>
   );
 };

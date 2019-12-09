@@ -1,6 +1,13 @@
-/* TODO: long event summaries shrink secondary header width */
+/* TODO: fix overflow on secondary event summaries */
 
 /* GENERAL STYLING */
+
+:root {
+  --background-color: #fff;
+
+  --primary-color: hotpink;
+  --secondary-color: blue;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -8,36 +15,49 @@
 
 html {
   font-family: 'Roboto', 'Segoe UI', Arial;
-  font-size: 1.6vw;
+  font-size: 1.8vw;
 }
 
 body {
-  max-height: 100vh;
-  height: 100vh;
-
+  min-width: 1100px;
   margin: 0;
 
-  background-color: #999;
+  overflow: hidden;
+
+  background-color: var(--background-color);
+}
+
+button {
+  padding: 0.4em;
+
+  font-size: 1em;
+
+  background-color: var(--primary-color);
+
+  border: none;
+  border-radius: 0.2rem;
 }
 
 .muted {
   opacity: 0.5;
 }
 
+.block--center {
+  margin: 0 auto;
+}
+
 /* main layout */
 
 main#root {
-  height: 100%;
+  height: 100vh;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+  grid-auto-rows: 100vh;
 }
 
-main > * {
-  width: 50%;
-  padding: 0.4em;
-
-  display: flex;
-  flex-direction: column;
+main#root > * {
+  margin: 0.2rem;
 }
 
 figure {
@@ -46,17 +66,22 @@ figure {
 }
 
 .left {
-
+  display: grid;
+  grid-template-rows: 25% auto;
+  align-items: center;
 }
 
 .right {
-  justify-content: space-between;
+  display: grid;
+  grid-gap: 0.4em;
+
+  font-size: 0.5rem;
 }
 
 
 /* BORDERS */
 
-.event--time, .secondary .header {
+.event--time {
   border-right: 1px solid black;
 }
 
@@ -81,65 +106,58 @@ figure {
 
 .clock {
   margin: 1.5rem 0;
-  font-size: 4rem;
-  /* font-weight: normal; */
+  font-size: 4em;
 
-  color: white;
+  /* text-shadow: -0.05rem 0.05rem 0.1rem black; */
+}
 
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
-  text-shadow:
-       -3px 3px 0 #000;
+
+/* AUTHORIZATION PAGE */
+
+.text-center {
+  text-align: center;
 }
 
 
 /* MAIN CALENDAR */
 
 .primary {
-  flex-grow: 1;
+  height: 100%;
 }
 
 
 /* SECONDARY CALENDAR  */
 
 .secondary {
-  font-size: 0.5rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 25% auto;
 }
 
+.secondary .header {
+  border-right: 2px solid #ddd;
+}
 
 /* HEADERS */
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+  text-align: center;
+  white-space: nowrap;
   align-items: center;
-  justify-content: space-around;
-
-  padding: 0.25em 0.75em;
-}
-
-.header > * {
-  margin: 0.5em;
 }
 
 .primary .header {
   padding: 1em 0;
-
   border-bottom: 2px solid #ddd;
 }
 
 .primary, .secondary {
-  text-align: center;
-
   background-color: white;
 
   border: 1px solid black;
   box-shadow: -0.05rem 0.05rem 0.1rem;
   border-radius: 0.2rem;
-}
-
-.primary .info {
-  width: 60%;
 }
 
 .info * {
@@ -148,27 +166,20 @@ figure {
 }
 
 .info .day, .temperatures .current {
-  font-size: 2em;
+  font-size: 2.4em;
   font-weight: bold;
-}
-
-.secondary .header {
-  flex-direction: column-reverse;
-
-  margin: 0;
-  width: 25%;
-  min-width: 25%;
 }
 
 
 /* EVENTS */
 
-.secondary .events {
-  flex-grow: 1;
+.events {
+  font-size: 0.8em;
 }
 
-.event, .event--small {
-  display: flex;
+.event {
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
 
   margin: 0.25em 0.75em;
@@ -181,15 +192,17 @@ figure {
 .event--summary {
   margin: 0;
 
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: normal;
 
-  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .event--time {
   padding-right: 0.25em;
-  margin-right: 0.75em;
+  margin-right: 0.5em;
 
   text-align: right;
 }
@@ -207,13 +220,14 @@ figure {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin-left: 1.5em;
 }
 
 .temperatures {
-  height: 100%;
-  width: 100%;
+  margin-right: 1em;
+}
+
+.secondary .temperatures {
+  font-size: 1.2em;
 }
 
 .temperatures * {
@@ -222,9 +236,4 @@ figure {
 
 .temp::after {
   content: '°';
-}
-
-.weather--canvas {
-  max-width: 100%;
-  max-height: 100%;
 }

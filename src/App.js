@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import Clock from './components/Clock';
+import Authorization from './components/Authorization';
 import PrimaryCalendar from './components/PrimaryCalendar';
 import SecondaryEvents from './components/SecondaryEvents';
 
 import getLocation from './apis/geolocation';
+import getWeather from './apis/darkSkyApi';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
-import { getDarkSkyWeather } from './apis/darkSkyApi';
 
 import config from './config';
 import { isSameDate, addDays } from './helpers/dateTime';
@@ -27,15 +28,13 @@ const App = () => {
   useEffect(() => {
     // updates authorization state when google calendar api is loaded
     loadApiClient(setAuthorized);
-
-    getLocation(setLocation, console.log);
   }, []);
 
   useEffect(() => {
     if (location !== null) {
 
       async function updateWeather() {
-        const { currently, daily } = await getDarkSkyWeather(location);
+        const { currently, daily } = await getWeather(location);
 
         setCurrentWeather(currently);
 
@@ -60,6 +59,7 @@ const App = () => {
     let intervalId;
 
     if (isAuthorized) {
+      getLocation(setLocation, console.log);
 
       loadCalendarEvents(setEvents);
       intervalId = setInterval(() => loadCalendarEvents(setEvents), config.calendar.syncInterval * 1000);
@@ -70,6 +70,16 @@ const App = () => {
       if (intervalId) clearInterval(intervalId);
     }
   }, [isAuthorized]);
+
+
+  if (!isAuthorized) {
+    return (
+      <div className="block--center">
+        <Clock date={ date } setDate={ setDate } />
+        <Authorization setAuthorized={ setAuthorized } />
+      </div>
+    );
+  }
 
   return (
     <>

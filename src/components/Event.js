@@ -5,16 +5,16 @@ import EventSummary from './EventSummary';
 
 const Event = ({ summary, startTime, endTime, compact }) => {
 
-  if (startTime === undefined && endTime === undefined) {
+  if (!(startTime && endTime)) {
     return (
-      <div className={ compact ? "event--small" : "event" }>
+      <div className="event">
         <EventSummary summary={ summary } />
       </div>
     );
   }
 
   return (
-    <div className={ compact ? "event--small" : "event" }>
+    <div className="event">
       <EventTime
         startTime={ startTime }
         endTime={ compact ? null : endTime }
