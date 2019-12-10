@@ -40,11 +40,11 @@ function formatDate(date, format) {
 
   switch(format) {
     case dateFormats.shortest:
-      return `${month}/${day}`;
+      return `${month + 1}/${day}`;
     case dateFormats.short:
-      return `${month}/${day}/${year.toString().substring(year.length - 2)}`;
+      return `${month + 1}/${day}/${year.toString().substring(year.length - 2)}`;
     case dateFormats.longerButStillShort:
-      return `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
+      return `${(month + 1).toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
     case dateFormats.businessCasual:
       return `${monthNames[month].length <= 4 ? monthNames[month] : monthNames[month].substring(0, 3)} ${day}, ${year}`;
     case dateFormats.formal:
