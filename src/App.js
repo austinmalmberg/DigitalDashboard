@@ -10,7 +10,7 @@ import getWeather from './apis/darkSkyApi';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
 
 import config from './config';
-import { isSameDate, addDays } from './helpers/dateTime';
+import { dateWithinRange, addDays } from './helpers/dateTime';
 
 const App = () => {
 
@@ -19,9 +19,9 @@ const App = () => {
 
   const [ isAuthorized, setAuthorized ] = useState(false);
   const [ events, setEvents ] = useState([]);
-  const [ currentWeather, setCurrentWeather ] = useState(null);
 
   const [ location, setLocation ] = useState(null);
+  const [ currentWeather, setCurrentWeather ] = useState(null);
   const [ forecastData, setForecastData ] = useState([]);
 
   // called once to load Google Calendar and Dark Sky APIs
@@ -36,7 +36,8 @@ const App = () => {
       async function updateWeather() {
         const { currently, daily } = await getWeather(location);
 
-        setCurrentWeather(currently);
+        if (currently)
+          setCurrentWeather(currently);
 
         if (daily) {
           setForecastData(daily.data);
@@ -74,7 +75,7 @@ const App = () => {
 
   if (!isAuthorized) {
     return (
-      <div className="block--center">
+      <div className="text-center">
         <Clock date={ date } setDate={ setDate } />
         <Authorization setAuthorized={ setAuthorized } />
       </div>
@@ -89,7 +90,7 @@ const App = () => {
 
         <PrimaryCalendar
           date={ date }
-          events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, date)) }
+          events={ events.filter(event => dateWithinRange(date, event.start.dateTime || event.start.date, event.end.dateTime || event.end.date)) }
           currentWeather={ currentWeather }
           forecastData = { forecastData[0] }
         />
@@ -103,7 +104,7 @@ const App = () => {
           <SecondaryEvents
             key={ key }
             date={ futureDate }
-            events={ events.filter(event => isSameDate(event.start.dateTime || event.start.date, futureDate)) }
+            events={ events.filter(event => dateWithinRange(futureDate, event.start.dateTime || event.start.date, event.end.dateTime || event.end.date)) }
             forecastData = { forecastData[key + 1] }
           />
         ))}
