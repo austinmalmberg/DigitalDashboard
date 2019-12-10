@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import setSkycon from '../helpers/skycons';
 
 const Weather = ({ currentWeather, forecastData, compact }) => {
 
-  const [ icon, setIcon ] = useState('');
   const canvas = useRef(null);
 
   useEffect(() => {
-    if (forecastData && icon !== forecastData.icon) {
-      setIcon(forecastData.icon);
+    if (currentWeather) {
+      setSkycon(canvas.current, currentWeather.icon);
+    } else if (forecastData) {
       setSkycon(canvas.current, forecastData.icon);
     }
-  }, [forecastData, icon]);
+  }, [currentWeather, forecastData]);
 
   const canvasDimensions = compact ? 75 : 150;
 
