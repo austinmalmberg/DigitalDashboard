@@ -14,7 +14,7 @@ const Weather = ({ currentWeather, forecastData, compact }) => {
     }
   }, [forecastData, icon]);
 
-  const canvasDimensions = compact ? 100 : 150;
+  const canvasDimensions = compact ? 75 : 150;
 
   if (!forecastData) {
     return (
