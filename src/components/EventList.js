@@ -14,10 +14,6 @@ const EventList = ({ events, compact }) => {
     );
   }
 
-  if (events.length > 4 && compact) {
-    events.slice(0, 4);
-  }
-
   return (
     <div className="events">
       { events.map((event, key) => (
