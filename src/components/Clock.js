@@ -28,7 +28,7 @@ const Clock = ({ date, setDate }) => {
 
   return (
     <div className="clock--panel">
-      <h1 className="clock">{ formatTime(date, config.clock.militaryTime) }</h1>
+      <h1 className="clock">{ formatTime(dateTime, config.clock.militaryTime) }</h1>
     </div>
   );
 };
