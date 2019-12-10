@@ -1,12 +1,8 @@
 
 export default {
-  default_location: {   // used by geolocation
-    latitude: 35.501,
-    longitude: -81.004
-  },
-
   clock: {
-    militaryTime: false
+    militaryTime: false,
+    displaySeconds: false
   },
 
   calendar: {
@@ -17,7 +13,7 @@ export default {
 
   weather: {
     units: 'imperial',  // imperial, metric, kelvin
-    syncInterval: 1, // in minutes, used to make api calls
-    cacheAge: 20 // in minutes
+    syncInterval: 5, // in minutes, used to make api calls
+    cacheAge: 5 // in minutes
   }
 };

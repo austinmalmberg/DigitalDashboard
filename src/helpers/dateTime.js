@@ -1,4 +1,6 @@
 
+import config from '../config';
+
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -10,23 +12,24 @@ const dateFormats = {
   formal: 'month 00, 0000'
 };
 
-function formatTime(date, militaryTime, displaySecs) {
+function formatTime(date) {
   let hour = date.getHours();
-  if (!militaryTime && hour > 12) {
-    hour -= 12;
-  }
 
   const min = date.getMinutes().toString().padStart(2, '0');
   const secs = date.getSeconds().toString().padStart(2, '0');
-  const ampm = date.getHours() < 12 ? 'AM' : 'PM';
 
-  if (hour === 0)
+  if (config.clock.militaryTime)
+    return `${hour.toString().padStart(2, '0')}${min}${config.clock.displaySeconds ? ':'+secs : ''}`;
+
+  const ampm = hour < 12 ? 'AM' : 'PM';
+
+  if (hour === 0) {
     hour = 12;
+  } else if (hour > 12) {
+    hour -= 12;
+  }
 
-  if (displaySecs)
-    return `${hour}:${min}:${secs}${militaryTime ? '' : ' '+ampm}`;
-
-  return `${hour}:${min}${militaryTime ? '' : ' '+ampm}`;
+  return `${hour}:${min}${config.clock.displaySeconds ? ':'+secs : ''} ${ampm}`;
 }
 
 function formatDate(date, format) {
