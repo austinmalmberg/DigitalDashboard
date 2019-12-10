@@ -67,15 +67,37 @@ function getDayInWeek(date, format) {
 function isSameDate(d1, d2) {
   if (!d1 || !d2) return false;
 
-  if (!(d1 instanceof Date))
-    d1 = new Date(d1);
+  try {
+    if (!(d1 instanceof Date))
+      d1 = new Date(d1);
 
-  if (!(d2 instanceof Date))
-    d2 = new Date(d2);
+    if (!(d2 instanceof Date))
+      d2 = new Date(d2);
 
-  return d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate();
+    return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
+  } catch (err) {
+    return false;
+  }
+}
+
+function dateWithinRange(date, rangeStart, rangeEnd) {
+
+  try {
+    if (!(date instanceof Date))
+      date = new Date(date);
+
+    if (!(rangeStart instanceof Date))
+      rangeStart = new Date(rangeStart);
+    if (!(rangeEnd instanceof Date))
+      rangeEnd = new Date(rangeEnd);
+
+    return rangeStart.getTime() <= date.getTime() && date.getTime() <= rangeEnd.getTime();
+  } catch (err) {
+    console.log(`error: `, date, rangeStart, rangeEnd);
+    return false;
+  }
 }
 
 /**
@@ -92,8 +114,9 @@ function addDays(dateTime, numDays) {
 
   const halfday = 1000 * 60 * 60 * 12 * Math.sign(numDays);
 
-  if (numDays < 0)
+  if (numDays < 0) {
     numDays *= -1;
+  }
 
   while (numDays > 0) {
     let day = dateTime.getDate();
@@ -110,4 +133,4 @@ function addDays(dateTime, numDays) {
   return dateTime;
 }
 
-export { dateFormats, formatTime, formatDate, getDayInWeek, isSameDate, addDays };
+export { dateFormats, formatTime, formatDate, getDayInWeek, isSameDate, dateWithinRange, addDays };
