@@ -1,6 +1,6 @@
 const Skycons = window.Skycons;
 
-const skycons = new Skycons({ "color": "black"});
+let skycons = new Skycons({ "color": "#dfe6e9"});
 
 const skycon = {
   "clear-day": Skycons.CLEAR_DAY,
@@ -16,6 +16,10 @@ const skycon = {
 }
 
 const def = Skycons.WIND;
+
+function setColor(color) {
+  skycons = new Skycons({ "color": color });
+}
 
 function setSkycon(element, description) {
   skycons.set(element, skycon[description] || def);
