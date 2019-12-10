@@ -30,6 +30,14 @@ async function initClient(signInListener) {
   }).catch(console.log);
 }
 
+function signIn() {
+  gapi.auth2.getAuthInstance().signIn();
+}
+
+function signOut() {
+  gapi.auth2.getAuthInstance().signOut();
+}
+
 async function loadCalendarEvents(eventsListener) {
 
   const response = await gapi.client.calendar.events.list({
@@ -44,4 +52,4 @@ async function loadCalendarEvents(eventsListener) {
   eventsListener(response.result.items);
 }
 
-export { loadApiClient, loadCalendarEvents };
+export { loadApiClient, loadCalendarEvents, signIn, signOut };
