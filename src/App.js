@@ -52,7 +52,7 @@ const App = () => {
       };
 
     }
-  }, [location]);
+  }, [location, date]);
 
   // listen for Google OAUTH sign in
   useEffect(() => {
@@ -63,7 +63,7 @@ const App = () => {
       getLocation(setLocation, console.log);
 
       loadCalendarEvents(setEvents);
-      intervalId = setInterval(() => loadCalendarEvents(setEvents), config.calendar.syncInterval * 1000);
+      intervalId = setInterval(() => loadCalendarEvents(setEvents), config.calendar.syncInterval * 60 * 1000);
     }
 
     // clean up interval
