@@ -15,3 +15,5 @@ By default, the application grabs events from the user's primary calendar. To us
 ### About the Weather
 
 Due to caps on (free) Dark Sky API calls, I'm caching location weather data on the server for now.  For this reason, setting `weather.syncInterval` in the *src/config.js* file to anything less than 5 minutes will pull cached data.
+
+Copyright (c) 2019 Austin Malmberg
