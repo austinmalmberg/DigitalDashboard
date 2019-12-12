@@ -39,11 +39,12 @@ function signOut() {
 }
 
 async function loadCalendarEvents(eventsListener) {
+  const now = new Date();
 
   const response = await gapi.client.calendar.events.list({
-    'calendarId': config.calendar.calendarId,
-    'timeMin': (normalizeDate(new Date())).toISOString(),
-    'timeMax': (addDays(new Date(), config.calendar.daysToSync)).toISOString(),
+    'calendarId': config.calendar.calendarId || 'primary',
+    'timeMin': (normalizeDate(now)).toISOString(),
+    'timeMax': (addDays(now, config.calendar.daysToSync || 7)).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
     'orderBy': 'startTime'

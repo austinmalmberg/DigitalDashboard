@@ -46,7 +46,7 @@ const App = () => {
 
       updateWeather();
       // schedule periodic weather updates
-      weatherId = setInterval(updateWeather, config.weather.syncInterval * 60 * 1000);
+      weatherId = setInterval(updateWeather, process.env.WEATHER_SYNC_INTERVAL || 5 * 60 * 1000);
 
       console.log('initialize weather');
     } else {
@@ -68,7 +68,7 @@ const App = () => {
     if (signedIn) {
       // load calendar events
       loadCalendarEvents(setEvents);
-      intervalId = setInterval(() => loadCalendarEvents(setEvents), Math.max(config.calendar.syncInterval, 5) * 60 * 1000);
+      intervalId = setInterval(() => loadCalendarEvents(setEvents), process.env.CALENDAR_SYNC_INTERVAL || 5 * 60 * 1000);
 
       console.log('initialize calendar');
     } else {
@@ -111,7 +111,7 @@ const App = () => {
       <div className="right">
 
         {/* map numbers from 0 - daysToSync to their respective date then create SecondaryEvent components from these dates */}
-        { [...Array(config.calendar.daysToSync - 1).keys()].map(key => [addDays(date, key + 1), key]).map(([futureDate, i], key) => (
+        { [...Array(config.calendar.daysToSync - 1).keys()].map(i => [addDays(date, i + 1), i]).map(([futureDate, i], key) => (
           <DailySnapshot
             key={ key }
             forDate={ futureDate }
