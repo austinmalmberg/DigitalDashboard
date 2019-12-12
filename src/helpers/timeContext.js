@@ -1,6 +1,5 @@
 
-import { formatTime, formatDate, isSameDate, getDayTimeParams } from './dateTime';
-import config from '../config';
+import { formatTime, isSameDate, getDayTimeParams } from './dateTime';
 
 function getContextRemarks(date, dateRange) {
 

@@ -21,7 +21,7 @@ const Event = ({ event, forDate, compact }) => {
     }
 
     setSummary(event.summary);
-  }, [event, forDate])
+  }, [event, forDate, compact])
 
   return (
     <div className="event">
