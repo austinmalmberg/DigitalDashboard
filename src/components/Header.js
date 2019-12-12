@@ -4,7 +4,7 @@ import Weather from './Weather';
 
 import { formatDate } from '../helpers/dateTime';
 
-const Header = ({ date, currentWeather, forecastData, compact }) => {
+const Header = ({ date, weather, compact }) => {
 
   const options = compact ?
     { month: 'numeric', day: 'numeric' }:
@@ -12,11 +12,11 @@ const Header = ({ date, currentWeather, forecastData, compact }) => {
 
   return (
     <div className="header">
-      <div className="info">
+      <div className="date--info">
         <h2 className="day">{ formatDate(date, { weekday: 'long' }) }</h2>
         <p className="date">{ formatDate(date, options) }</p>
       </div>
-      <Weather currentWeather={ currentWeather } forecastData={ forecastData } compact={ compact } />
+      <Weather weather={ weather } compact={ compact } />
     </div>
   );
 };

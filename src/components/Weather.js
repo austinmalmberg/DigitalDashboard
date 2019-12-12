@@ -1,22 +1,34 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import setSkycon from '../helpers/skycons';
 
-const Weather = ({ currentWeather, forecastData, compact }) => {
+const Weather = ({ weather, compact }) => {
+
+  const [ current, setCurrent ] = useState(null);
+  const [ forecast, setForecast ] = useState(null);
 
   const canvas = useRef(null);
 
   useEffect(() => {
-    if (currentWeather) {
-      setSkycon(canvas.current, currentWeather.icon);
-    } else if (forecastData) {
-      setSkycon(canvas.current, forecastData.icon);
+    if (weather) {
+      setCurrent(weather.currently);
+      setForecast(weather.forecast);
     }
-  }, [currentWeather, forecastData]);
+  }, [weather]);
 
-  const canvasDimensions = compact ? 75 : 150;
+  useEffect(() => {
 
-  if (!forecastData) {
+    if (current) {
+      setSkycon(canvas.current, current.icon);
+    } else if (forecast) {
+      setSkycon(canvas.current, forecast.icon);
+    }
+
+  }, [current, forecast]);
+
+  const canvasDimensions = compact ? 60 : 150;
+
+  if (!weather) {
     return (
       <div className="weather">
         <p>No weather data</p>
@@ -27,9 +39,9 @@ const Weather = ({ currentWeather, forecastData, compact }) => {
   return (
     <div className="weather">
       <div className="temperatures">
-        <p className="temp hi">Hi: { Math.round(forecastData.temperatureHigh) }</p>
-        { currentWeather && <p className="temp current">{ Math.round(currentWeather.temperature) }</p> }
-        <p className="temp lo">Lo: { Math.round(forecastData.temperatureLow) }</p>
+        { forecast && <p className="temp hi">Hi: { Math.round(forecast.temperatureHigh) }</p> }
+        { current && <p className="temp current">{ Math.round(current.temperature) }</p> }
+        { forecast && <p className="temp lo">Lo: { Math.round(forecast.temperatureLow) }</p> }
       </div>
       <figure className="icon">
         <canvas ref={ canvas } className="weather--canvas" width={ canvasDimensions } height={ canvasDimensions }></canvas>

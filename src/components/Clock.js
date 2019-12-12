@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { formatTime, isSameDate } from '../helpers/dateTime';
+import { formatTime, isSameDate, normalizeDate } from '../helpers/dateTime';
 
 import config from '../config';
 
@@ -9,7 +9,7 @@ const Clock = ({ appDate, setAppDate }) => {
   const [ date, setDate ] = useState(new Date());
 
   const matchDates = () => {
-    if (!isSameDate(date, appDate)) setAppDate(date);
+    if (!isSameDate(date, appDate)) setAppDate(normalizeDate(date));
   };
 
   // syncs the interval with the system clock so they tick together

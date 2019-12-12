@@ -2,72 +2,85 @@ import React, { useState, useEffect } from 'react';
 
 import Clock from './components/Clock';
 import Authorization from './components/Authorization';
-import PrimaryCalendar from './components/PrimaryCalendar';
-import SecondaryEvents from './components/SecondaryEvents';
+import DailySnapshot from './components/DailySnapshot';
 
 import getLocation from './apis/geolocation';
 import getWeather from './apis/darkSkyApi';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
 
 import config from './config';
-import { dateWithinRange, addDays } from './helpers/dateTime';
+import { addDays, normalizeDate } from './helpers/dateTime';
 
 const App = () => {
 
   // updates daily via the Clock component
-  const [ date, setDate ] = useState(new Date());
+  const [ date, setDate ] = useState(normalizeDate(new Date()));
 
   const [ signedIn, setSignedIn ] = useState(false);
   const [ events, setEvents ] = useState([]);
 
   const [ location, setLocation ] = useState(null);
-  const [ currentWeather, setCurrentWeather ] = useState(null);
-  const [ forecastData, setForecastData ] = useState([]);
+  const [ weatherData, setWeatherData ] = useState(null);
 
-  // called once to load Google Calendar and Dark Sky APIs
+  // onload, get calendar events and weather
   useEffect(() => {
     // request location for weather data
     getLocation(setLocation, console.log);
 
     // updates authorization state when google calendar api is loaded
     loadApiClient(setSignedIn);
+
+    console.log('initialize application');
   }, []);
 
   useEffect(() => {
-    if (location !== null) {
+    let weatherId;
 
-      const updateWeather = async () => {
+    if (location) {
+      async function updateWeather() {
         const weather = await getWeather(location);
         if (weather) {
-          setCurrentWeather(weather.currently);
-          setForecastData(weather.daily.data);
+          setWeatherData(weather);
         }
-      };
+      }
 
       updateWeather();
-      const weatherId = setInterval(updateWeather, config.weather.syncInterval * 60 * 1000);
+      // schedule periodic weather updates
+      weatherId = setInterval(updateWeather, config.weather.syncInterval * 60 * 1000);
 
-      return () => {
-        if (weatherId) clearInterval(weatherId);
-      };
+      console.log('initialize weather');
+    } else {
 
+      console.log('could not initialize weather');
     }
+
+    return () => {
+      if (weatherId) clearInterval(weatherId);
+
+      console.log('clean up weather interval');
+    };
   }, [location, date]);
 
   // listen for Google OAUTH sign in
   useEffect(() => {
-
     let intervalId;
 
     if (signedIn) {
       // load calendar events
       loadCalendarEvents(setEvents);
       intervalId = setInterval(() => loadCalendarEvents(setEvents), Math.max(config.calendar.syncInterval, 5) * 60 * 1000);
+
+      console.log('initialize calendar');
+    } else {
+
+      console.log('could not initialize calendar');
     }
 
     // clean up interval
     return () => {
       if (intervalId) clearInterval(intervalId);
+
+      console.log('clean up calendar interval');
     }
   }, [signedIn]);
 
@@ -87,11 +100,10 @@ const App = () => {
 
         <Clock appDate={ date } setAppDate={ setDate } />
 
-        <PrimaryCalendar
-          date={ date }
-          events={ events.filter(event => dateWithinRange(date, event.start.dateTime || event.start.date, event.end.dateTime || event.end.date)) }
-          currentWeather={ currentWeather }
-          forecastData = { forecastData[0] }
+        <DailySnapshot
+          forDate={ date }
+          events={ events }
+          weatherData={ weatherData }
         />
 
       </div>
@@ -99,18 +111,18 @@ const App = () => {
       <div className="right">
 
         {/* map numbers from 0 - daysToSync to their respective date then create SecondaryEvent components from these dates */}
-        { [...Array(config.calendar.daysToSync - 1).keys()].map(key => addDays(date, key + 1)).map((futureDate, key) => (
-          <SecondaryEvents
+        { [...Array(config.calendar.daysToSync - 1).keys()].map(key => [addDays(date, key + 1), key]).map(([futureDate, i], key) => (
+          <DailySnapshot
             key={ key }
-            date={ futureDate }
-            events={ events.filter(event => dateWithinRange(futureDate, event.start.dateTime || event.start.date, event.end.dateTime || event.end.date)) }
-            forecastData = { forecastData[key + 1] }
+            forDate={ futureDate }
+            events={ events }
+            weatherData={ weatherData }
           />
         ))}
 
       </div>
     </>
   );
-}
+};
 
 export default App;

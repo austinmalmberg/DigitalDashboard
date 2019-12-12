@@ -2,14 +2,12 @@ import React from 'react';
 
 import Event from './Event';
 
-import { formatTime } from '../helpers/dateTime';
+const EventList = ({ events, forDate, compact }) => {
 
-const EventList = ({ events, compact }) => {
-
-  if (events.length === 0) {
+  if (!events) {
     return (
-      <div className="events muted">
-        <Event summary={ `Nothing scheduled` } compact={ compact } />
+      <div className="events">
+
       </div>
     );
   }
@@ -19,9 +17,8 @@ const EventList = ({ events, compact }) => {
       { events.map((event, key) => (
         <Event
           key={ key }
-          summary={ event.summary }
-          startTime={ formatTime(new Date(event.start.dateTime || event.start.date)) }
-          endTime={ formatTime(new Date(event.end.dateTime || event.end.date)) }
+          event={ event }
+          forDate={ forDate }
           compact={ compact }
         />
       ))}

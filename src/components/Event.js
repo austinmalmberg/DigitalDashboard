@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import EventTime from './EventTime';
-import EventSummary from './EventSummary';
+import { isSameDate, formatTime } from '../helpers/dateTime';
 
-const Event = ({ summary, startTime, endTime, compact }) => {
+const Event = ({ event, forDate, compact }) => {
 
-  if (!(startTime && endTime)) {
-    return (
-      <div className="event">
-        <EventSummary summary={ summary } />
-      </div>
-    );
-  }
+  const [ start, setStart ] = useState(null);
+  const [ end, setEnd ] = useState(null);
+  const [ summary, setSummary ] = useState('');
+
+  useEffect(() => {
+    const startDate = new Date(event.start.dateTime || `${event.start.date}T00:00:00`);
+    const start = isSameDate(forDate, startDate) ? formatTime(startDate) : null;
+    setStart(start);
+
+    const endDate = new Date(event.end.dateTime || `${event.end.date}T00:00:00`);
+    const end = isSameDate(forDate, endDate) ? formatTime(endDate) : null;
+    setEnd(end);
+
+    setSummary(event.summary);
+  }, [event, forDate])
 
   return (
     <div className="event">
-      <EventTime
-        startTime={ startTime }
-        endTime={ compact ? null : endTime }
-      />
-      <EventSummary summary={ summary } />
+      { start &&
+        <div className="event--time muted">
+          <p>{ start }</p>
+          { (!compact && end) && <p>{ end }</p> }
+        </div>
+      }
+      <p className="event--summary">{ summary }</p>
     </div>
   );
 };

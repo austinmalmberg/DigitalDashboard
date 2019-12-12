@@ -50,7 +50,6 @@ main#root {
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
-  /* grid-template-columns: 1fr 1fr; */
   grid-auto-rows: 100vh;
 }
 
@@ -71,7 +70,7 @@ figure {
 
 .right {
   display: grid;
-  grid-gap: 0.4em;
+  grid-gap: 0.5em;
 
   font-size: 0.5rem;
 }
@@ -107,7 +106,6 @@ figure {
   font-size: 4em;
 
   color: var(--secondary-color);
-  text-shadow: -0.05rem 0.05rem 0.1rem var(--secondary-color);
 }
 
 
@@ -157,12 +155,12 @@ figure {
   border-radius: 0.2rem;
 }
 
-.info * {
+.date--info * {
   margin: 0;
   padding: 0;
 }
 
-.info .day, .temperatures .current {
+.date--info .day, .temperatures .current {
   font-size: 2.4em;
   font-weight: bold;
 }
@@ -175,8 +173,8 @@ figure {
   grid-template-columns: auto 1fr;
   align-items: center;
 
-  margin: 0.25em 0.75em;
-  padding: 0.25em 0;
+  margin: 0.125em 0.5em;
+  padding: 0.125em 0;
 
   opacity: 1;
   animation: fadeinout 2s linear;

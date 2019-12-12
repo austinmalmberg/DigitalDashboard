@@ -15,11 +15,8 @@ const skycon = {
   "fog": Skycons.FOG
 }
 
+// default
 const def = Skycons.WIND;
-
-function setColor(color) {
-  skycons = new Skycons({ "color": color });
-}
 
 function setSkycon(element, description) {
   skycons.set(element, skycon[description] || def);

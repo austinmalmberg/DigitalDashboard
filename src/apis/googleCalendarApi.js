@@ -49,7 +49,6 @@ async function loadCalendarEvents(eventsListener) {
     'orderBy': 'startTime'
   });
 
-  console.log(response.result.items);
   eventsListener(response.result.items);
 }
 
