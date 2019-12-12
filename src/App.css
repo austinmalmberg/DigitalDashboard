@@ -76,13 +76,6 @@ figure {
 }
 
 
-/* BORDERS */
-
-.event--time {
-  border-right: 1px solid var(--secondary-color);
-}
-
-
 /* EVENT TRANSITIONS */
 
 @keyframes fadeinout {
@@ -120,6 +113,7 @@ figure {
 
 .primary {
   height: 100%;
+  width: 100%;
 }
 
 
@@ -178,12 +172,13 @@ figure {
 
   opacity: 1;
   animation: fadeinout 2s linear;
+
+  font-size: 0.8em;
 }
 
 .event--summary {
   margin: 0;
 
-  font-size: 1.4em;
   font-weight: normal;
 
   white-space: nowrap;
@@ -196,6 +191,8 @@ figure {
   margin-right: 0.5em;
 
   text-align: right;
+
+  border-right: 1px solid var(--secondary-color);
 }
 
 .event--time > * {

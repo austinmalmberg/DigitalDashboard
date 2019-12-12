@@ -22,9 +22,11 @@ function formatTime(date, options) {
 
   if (!options) {
     options = {
-      timeStyle: config.displaySeconds ? 'medium' : 'short',
+      timeStyle: 'short',
       hour12: !config.militaryTime,
     };
+  } else if (!options.hour12) {
+    options.hour12 = !config.militaryTime;
   }
 
   return date.toLocaleTimeString(undefined, options);

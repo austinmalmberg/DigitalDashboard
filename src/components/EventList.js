@@ -6,9 +6,7 @@ const EventList = ({ events, forDate, compact }) => {
 
   if (!events) {
     return (
-      <div className="events">
-
-      </div>
+      <div className="events"></div>
     );
   }
 

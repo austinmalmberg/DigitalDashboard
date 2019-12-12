@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { isSameDate, formatTime } from '../helpers/dateTime';
+import getContextRemarks from '../helpers/timeContext';
 
 const Event = ({ event, forDate, compact }) => {
 
@@ -10,25 +10,28 @@ const Event = ({ event, forDate, compact }) => {
 
   useEffect(() => {
     const startDate = new Date(event.start.dateTime || `${event.start.date}T00:00:00`);
-    const start = isSameDate(forDate, startDate) ? formatTime(startDate) : null;
-    setStart(start);
-
     const endDate = new Date(event.end.dateTime || `${event.end.date}T00:00:00`);
-    const end = isSameDate(forDate, endDate) ? formatTime(endDate) : null;
-    setEnd(end);
+
+    const [ startRemarks, endRemarks ] = getContextRemarks(forDate, [startDate, endDate]);
+
+    setStart(startRemarks);
+    // only set end time if not compact or no startRemarks
+    if ((!compact || !startRemarks) && endRemarks) {
+      setEnd(endRemarks);
+    }
 
     setSummary(event.summary);
   }, [event, forDate])
 
   return (
     <div className="event">
-      { start &&
+      { (start || end) &&
         <div className="event--time muted">
-          <p>{ start }</p>
-          { (!compact && end) && <p>{ end }</p> }
+          { start && <p>{ start }</p> }
+          { end && <p>{ end }</p> }
         </div>
       }
-      <p className="event--summary">{ summary }</p>
+      <h3 className="event--summary">{ summary }</h3>
     </div>
   );
 };

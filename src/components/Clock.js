@@ -24,6 +24,11 @@ const Clock = ({ appDate, setAppDate }) => {
     return [ timeoutId, intervalId ];
   }
 
+  const formatOptions = {
+    timeStyle: config.displaySeconds ? 'medium' : 'short',
+    hour12: !config.militaryTime,
+  };
+
   useEffect(() => {
     const now = new Date();
     const updateInterval = config.displaySeconds ? 1000 : 1000 * 60;
@@ -39,7 +44,7 @@ const Clock = ({ appDate, setAppDate }) => {
 
   return (
     <div className="clock--panel">
-      <h1 className="clock">{ formatTime(date) }</h1>
+      <h1 className="clock">{ formatTime(date, formatOptions) }</h1>
     </div>
   );
 };

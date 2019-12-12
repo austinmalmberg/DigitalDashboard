@@ -39,9 +39,9 @@ const Weather = ({ weather, compact }) => {
   return (
     <div className="weather">
       <div className="temperatures">
-        { forecast && <p className="temp hi">Hi: { Math.round(forecast.temperatureHigh) }</p> }
+        { forecast && <p className="temp hi">Hi: { Math.round(forecast.temperatureMax) }</p> }
         { current && <p className="temp current">{ Math.round(current.temperature) }</p> }
-        { forecast && <p className="temp lo">Lo: { Math.round(forecast.temperatureLow) }</p> }
+        { forecast && <p className="temp lo">Lo: { Math.round(forecast.temperatureMin) }</p> }
       </div>
       <figure className="icon">
         <canvas ref={ canvas } className="weather--canvas" width={ canvasDimensions } height={ canvasDimensions }></canvas>
