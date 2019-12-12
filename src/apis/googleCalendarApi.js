@@ -1,7 +1,7 @@
 
 import config from '../config';
 
-import { addDays } from '../helpers/dateTime';
+import { addDays, normalizeDate } from '../helpers/dateTime';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
@@ -42,7 +42,7 @@ async function loadCalendarEvents(eventsListener) {
 
   const response = await gapi.client.calendar.events.list({
     'calendarId': config.calendar.calendarId,
-    'timeMin': (new Date()).toISOString(),
+    'timeMin': (normalizeDate(new Date())).toISOString(),
     'timeMax': (addDays(new Date(), config.calendar.daysToSync)).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
