@@ -17,7 +17,7 @@ const App = () => {
   // updates daily via the Clock component
   const [ date, setDate ] = useState(new Date());
 
-  const [ isAuthorized, setAuthorized ] = useState(false);
+  const [ signedIn, setSignedIn ] = useState(false);
   const [ events, setEvents ] = useState([]);
 
   const [ location, setLocation ] = useState(null);
@@ -26,23 +26,23 @@ const App = () => {
 
   // called once to load Google Calendar and Dark Sky APIs
   useEffect(() => {
+    // request location for weather data
+    getLocation(setLocation, console.log);
+
     // updates authorization state when google calendar api is loaded
-    loadApiClient(setAuthorized);
+    loadApiClient(setSignedIn);
   }, []);
 
   useEffect(() => {
     if (location !== null) {
 
-      async function updateWeather() {
-        const { currently, daily } = await getWeather(location);
-
-        if (currently)
-          setCurrentWeather(currently);
-
-        if (daily) {
-          setForecastData(daily.data);
+      const updateWeather = async () => {
+        const weather = await getWeather(location);
+        if (weather) {
+          setCurrentWeather(weather.currently);
+          setForecastData(weather.daily.data);
         }
-      }
+      };
 
       updateWeather();
       const weatherId = setInterval(updateWeather, config.weather.syncInterval * 60 * 1000);
@@ -59,9 +59,8 @@ const App = () => {
 
     let intervalId;
 
-    if (isAuthorized) {
-      getLocation(setLocation, console.log);
-
+    if (signedIn) {
+      // load calendar events
       loadCalendarEvents(setEvents);
       intervalId = setInterval(() => loadCalendarEvents(setEvents), Math.max(config.calendar.syncInterval, 5) * 60 * 1000);
     }
@@ -70,14 +69,14 @@ const App = () => {
     return () => {
       if (intervalId) clearInterval(intervalId);
     }
-  }, [isAuthorized]);
+  }, [signedIn]);
 
 
-  if (!isAuthorized) {
+  if (!signedIn) {
     return (
       <div className="text-center">
-        <Clock date={ date } setDate={ setDate } />
-        <Authorization setAuthorized={ setAuthorized } />
+        <Clock appDate={ date } setAppDate={ setDate } />
+        <Authorization signedIn={ signedIn } />
       </div>
     );
   }
@@ -86,7 +85,7 @@ const App = () => {
     <>
       <div className="left">
 
-        <Clock date={ date } setDate={ setDate } />
+        <Clock appDate={ date } setAppDate={ setDate } />
 
         <PrimaryCalendar
           date={ date }

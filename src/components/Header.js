@@ -2,19 +2,19 @@ import React from 'react';
 
 import Weather from './Weather';
 
-import { dateFormats, getDayInWeek, formatDate } from '../helpers/dateTime';
+import { formatDate } from '../helpers/dateTime';
 
 const Header = ({ date, currentWeather, forecastData, compact }) => {
 
-  const dateFormat = compact ?
-    dateFormats.shortest :
-    dateFormats.businessCasual;
+  const options = compact ?
+    { month: 'numeric', day: 'numeric' }:
+    { month: 'long', day: 'numeric' };
 
   return (
     <div className="header">
       <div className="info">
-        <h2 className="day">{ getDayInWeek(date) }</h2>
-        <p className="date">{ formatDate(date, dateFormat) }</p>
+        <h2 className="day">{ formatDate(date, { weekday: 'long' }) }</h2>
+        <p className="date">{ formatDate(date, options) }</p>
       </div>
       <Weather currentWeather={ currentWeather } forecastData={ forecastData } compact={ compact } />
     </div>

@@ -2,39 +2,44 @@ import React, { useState, useEffect } from 'react';
 
 import { formatTime, isSameDate } from '../helpers/dateTime';
 
-const Clock = ({ date, setDate }) => {
+import config from '../config';
 
-  const [ dateTime, setDateTime ] = useState(new Date());
+const Clock = ({ appDate, setAppDate }) => {
 
-  // initialize interval to update clock time
+  const [ date, setDate ] = useState(new Date());
+
+  const matchDates = () => {
+    if (!isSameDate(date, appDate)) setAppDate(date);
+  };
+
+  // syncs the interval with the system clock so they tick together
+  const syncClocks = (now, updateInterval) => {
+    let intervalId;
+
+    const timeoutId = setTimeout(() => {
+      setDate(new Date());
+      intervalId = setInterval(() => setDate(new Date()), updateInterval);
+    }, updateInterval - now.getTime() % updateInterval);
+
+    return [ timeoutId, intervalId ];
+  }
+
   useEffect(() => {
-    let timerId;
-
-    const d = new Date();
-    setDateTime(d);
-
-    // syncs the interval with the system clock so they "tick" together
-    const timeSyncId = setTimeout(() => {
-      timerId = setInterval(() => setDateTime(new Date()), 1000);
-    }, 1000 - d.getTime() % 1000);
+    const now = new Date();
+    const updateInterval = config.displaySeconds ? 1000 : 1000 * 60;
+    const [ timeoutId, intervalId ] = syncClocks(now, updateInterval);
 
     return () => {
-      if (timeSyncId) clearTimeout(timeSyncId);
-      if (timerId) clearInterval(timerId);
+      if (timeoutId) clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
     };
   }, []);
 
-  // called every rerender (every second) to determine if the date changed
-  // which updates the calendar in the main app
-  useEffect(() => {
-    if (!isSameDate(date, dateTime) || !date) {
-      setDate(dateTime);
-    }
-  });
+  useEffect(matchDates, [appDate, date]);
 
   return (
     <div className="clock--panel">
-      <h1 className="clock">{ formatTime(dateTime) }</h1>
+      <h1 className="clock">{ formatTime(date) }</h1>
     </div>
   );
 };

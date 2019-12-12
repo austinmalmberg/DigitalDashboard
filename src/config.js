@@ -1,9 +1,7 @@
 
 export default {
-  clock: {
-    militaryTime: false, // Default: false
-    displaySeconds: false // Default: false
-  },
+  militaryTime: false, // Default: false
+  displaySeconds: false, // Default: false
 
   calendar: {
     calendarId: 'primary',  // Default: 'primary'

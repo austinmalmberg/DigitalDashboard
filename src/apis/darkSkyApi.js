@@ -1,5 +1,5 @@
 
-async function getWeather(location, callback, error) {
+async function getWeather(location, callback, onError) {
 
   const { latitude, longitude } = location;
 
@@ -14,12 +14,19 @@ async function getWeather(location, callback, error) {
   let data;
   if (response.status === 200) {
     data = await response.json();
-  }
 
-  if (callback) {
-    callback(data);
+    if (callback) {
+      callback(data);
+    } else {
+      return data;
+    }
+
   } else {
-    return data;
+
+    if (onError)
+      onError(response);
+
+    return null;
   }
 }
 
