@@ -1,7 +1,7 @@
-$background-color: #95afc0;
+$default-bg-color: #95afc0;
 
-$text-color: #dfe6e9;
-$primary-color: #130f40;
+$default-calendar-color: #dfe6e9;
+$default-header-color: #130f40;
 
 
 /* GENERAL STYLING */
@@ -19,8 +19,8 @@ body {
   min-width: 600px;
   margin: 0;
 
-  color: $primary-color;
-  background-color: $background-color;
+  color: $default-header-color;
+  background-color: $default-bg-color;
 }
 
 button {
@@ -28,8 +28,8 @@ button {
 
   font-size: 1em;
 
-  background-color: $primary-color;
-  color: $text-color;
+  background-color: $default-header-color;
+  color: $default-calendar-color;
 
   margin: 0 auto;
 
@@ -57,7 +57,8 @@ main {
   grid-auto-rows: 100vh;
 
   background-position: center;
-  background-size: auto;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
 
   & > * {
     margin: 0.2rem;
@@ -97,16 +98,17 @@ main {
   white-space: nowrap;
   align-items: center;
 
-  background-color: $primary-color;
-  color: $text-color;
+  background-color: $default-header-color;
+  color: $default-calendar-color;
 }
 
 /* CALENDAR DAYS */
 
 .calendar--day {
-  background-color: $text-color;
+  background-color: $default-calendar-color;
   box-shadow: -0.05rem 0.05rem 0.1rem;
-  border: 1px solid $primary-color;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 0.2rem;
 }
 
@@ -136,6 +138,10 @@ main {
 
 /* EVENTS */
 
+.events {
+  font-size: 0.8em;
+}
+
 .event {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -146,8 +152,6 @@ main {
 
   opacity: 1;
   animation: fadeinout 2s linear;
-
-  font-size: 0.8em;
 }
 
 .event--summary {
@@ -166,7 +170,7 @@ main {
 
   text-align: right;
 
-  border-right: 1px solid $primary-color;
+  border-right: 1px solid $default-header-color;
 
   & > * {
     margin: 0;
@@ -221,42 +225,117 @@ main {
 
 /* THEMES */
 
+@mixin theme($clock-font-color, $header-color, $header-font-color, $calendar-bg-color, $calendar-font-color) {
+
+  .clock {
+    color: $clock-font-color;
+  }
+
+  .header {
+    background-color: $header-color;
+    color: $header-font-color;
+  }
+
+  .calendar--day {
+    background-color: $calendar-bg-color;
+    color: $calendar-font-color;
+
+    border-color: $header-color;
+  }
+}
+
 .rain {
   background-image: url('images/rain.jpg');
+
+  $dark-font-color: black;
+  $calendar-color: $default-calendar-color;
+  $header-color: #2d3436;
+
+  @include theme($dark-font-color, $header-color, $calendar-color, $calendar-color, $dark-font-color);
 }
 
 .clear-day {
   background-image: url('images/clear-day.jpg');
+
+  $dark-font-color: black;
+  $calendar-color: white;
+  $header-color: #4bcffa;
+
+  @include theme($dark-font-color, $header-color, $dark-font-color, $calendar-color, $dark-font-color);
 }
 
 .clear-night {
   background-image: url('images/clear-night.jpg');
+
+  $dark-font-color: black;
+  $calendar-color: #2C3A47;
+  $header-color: #d2dae2;
+
+  @include theme($header-color, $header-color, $calendar-color, $calendar-color, $header-color);
 }
 
 .partly-cloudy-day {
   background-image: url('images/partly-cloudy-day.jpg');
+
+  $dark-font-color: black;
+  $calendar-color: white;
+  $header-color: #0984e3;
+
+  @include theme($calendar-color, $header-color, $calendar-color, $calendar-color, $dark-font-color);
 }
 
 .partly-cloudy-night {
   background-image: url('images/partly-cloudy-night.jpg');
+
+  $dark-font-color: black;
+  $calendar-color: #B88430;
+  $header-color: black;
+
+  @include theme($calendar-color, $header-color, $calendar-color, $calendar-color, $dark-font-color);
 }
 
 .cloudy {
   background-image: url('images/cloudy.jpg');
+
+  $dark-font-color: black;
+  $calendar-color: white;
+  $header-color: #40739e;
+
+  @include theme($dark-font-color, $header-color, $dark-font-color, $calendar-color, $dark-font-color);
 }
 
 .snow {
   background-image: url('images/snow.jpg');
+
+  $dark-font-color: #4b4b4b;
+  $calendar-color: white;
+  $header-color: #f1f2f6;
+
+  @include theme($dark-font-color, $header-color, $dark-font-color, $calendar-color, $dark-font-color);
 }
 
 .sleet {
   background-image: url('images/sleet.jpg');
+
+  $dark-font-color: black;
+  $calendar-color: #2d3436;
+  $header-color: $default-calendar-color;
+
+  @include theme($dark-font-color, $header-color, $dark-font-color, $calendar-color, $header-color);
 }
 
 .wind {
   background-image: url('images/wind.jpg');
+
+  $dark-font-color: #331800;
+  $header-color: #686B13;
+  $calendar-color: white;
+
+  @include theme($dark-font-color, $header-color, $dark-font-color, $calendar-color, $dark-font-color);
 }
 
 .fog {
   background-image: url('images/fog.jpg');
+
+  // no mixin; use default
 }
