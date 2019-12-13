@@ -1,13 +1,10 @@
-/* TODO: fix overflow on secondary event summaries */
+$background-color: #95afc0;
+
+$text-color: #dfe6e9;
+$primary-color: #130f40;
+
 
 /* GENERAL STYLING */
-
-:root {
-  --background-color: #95afc0;
-
-  --text-color: #dfe6e9;
-  --primary-color: #130f40;
-}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -22,8 +19,8 @@ body {
   min-width: 600px;
   margin: 0;
 
-  color: var(--primary-color);
-  background-color: var(--background-color);
+  color: $primary-color;
+  background-color: $background-color;
 }
 
 button {
@@ -31,8 +28,8 @@ button {
 
   font-size: 1em;
 
-  background-color: var(--primary-color);
-  color: var(--text-color);
+  background-color: $primary-color;
+  color: $text-color;
 
   margin: 0 auto;
 
@@ -40,9 +37,15 @@ button {
   border-radius: 0.2rem;
 }
 
+figure {
+  margin: 0;
+  padding: 0;
+}
+
 .muted {
   opacity: 0.5;
 }
+
 
 /* main layout */
 
@@ -55,23 +58,29 @@ main {
 
   background-position: center;
   background-size: auto;
-}
 
-main > * {
-  margin: 0.2rem;
+  & > * {
+    margin: 0.2rem;
 
-  opacity: 0.9;
-}
-
-figure {
-  margin: 0;
-  padding: 0;
+    opacity: 0.9;
+  }
 }
 
 .left {
   display: grid;
   grid-template-rows: 25% auto;
   align-items: center;
+
+  & .clock--panel {
+    text-align: center;
+  }
+
+  & .clock {
+    margin: 1.5rem 0;
+    font-size: 4em;
+
+    text-shadow: -0.025rem 0.025rem 0.05rem;
+  }
 }
 
 .right {
@@ -81,58 +90,6 @@ figure {
   font-size: 0.5rem;
 }
 
-
-/* EVENT TRANSITIONS */
-
-@keyframes fadeinout {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@-webkit-keyframes fadeinout {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-
-/* CLOCK */
-
-.clock--panel {
-  text-align: center;
-}
-
-.clock {
-  margin: 1.5rem 0;
-  font-size: 4em;
-
-  text-shadow: -0.025rem 0.025rem 0.05rem;
-}
-
-
-/* AUTHORIZATION PAGE */
-
-.text-center {
-  text-align: center;
-}
-
-
-/* MAIN CALENDAR */
-
-.primary {
-  height: 100%;
-  width: 100%;
-}
-
-
-/* SECONDARY CALENDAR  */
-
-.secondary {
-  display: grid;
-  grid-template-columns: 30% auto;
-}
-
-/* HEADERS */
-
 .header {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, auto));
@@ -140,25 +97,31 @@ figure {
   white-space: nowrap;
   align-items: center;
 
-  background-color: var(--primary-color);
-  color: var(--text-color);
+  background-color: $primary-color;
+  color: $text-color;
 }
 
-.primary .header {
-  padding: 1em 0;
-}
+/* CALENDAR DAYS */
 
-.primary, .secondary {
-  background-color: var(--text-color);
-
-  border: 1px solid var(--primary-color);
+.calendar--day {
+  background-color: $text-color;
   box-shadow: -0.05rem 0.05rem 0.1rem;
+  border: 1px solid $primary-color;
   border-radius: 0.2rem;
 }
 
-.date--info * {
-  margin: 0;
-  padding: 0;
+.primary {
+  height: 100%;
+  width: 100%;
+
+  & .header {
+    padding: 1em 0;
+  }
+}
+
+.secondary {
+  display: grid;
+  grid-template-columns: 30% auto;
 }
 
 .date--info .day, .temperatures .current {
@@ -166,6 +129,10 @@ figure {
   font-weight: bold;
 }
 
+.date--info * {
+  margin: 0;
+  padding: 0;
+}
 
 /* EVENTS */
 
@@ -199,13 +166,24 @@ figure {
 
   text-align: right;
 
-  border-right: 1px solid var(--primary-color);
+  border-right: 1px solid $primary-color;
+
+  & > * {
+    margin: 0;
+    white-space: nowrap;
+  }
 }
 
-.event--time > * {
-  margin: 0;
+/* EVENT TRANSITIONS */
 
-  white-space: nowrap;
+@keyframes fadeinout {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeinout {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 
@@ -219,18 +197,25 @@ figure {
 
 .temperatures {
   margin-right: 1em;
+
+  & * {
+    margin: 0;
+  }
 }
 
 .secondary .temperatures {
   font-size: 1.2em;
 }
 
-.temperatures * {
-  margin: 0;
-}
-
 .temp::after {
   content: '°';
+}
+
+
+/* AUTHORIZATION PAGE */
+
+.text-center {
+  text-align: center;
 }
 
 
@@ -242,16 +227,12 @@ figure {
 
 .clear-day {
   background-image: url('images/clear-day.jpg');
-
-  color: black;
-}
-.clear-day .header {
-  background-color: #3285B3;
 }
 
 .clear-night {
   background-image: url('images/clear-night.jpg');
 }
+
 .partly-cloudy-day {
   background-image: url('images/partly-cloudy-day.jpg');
 }

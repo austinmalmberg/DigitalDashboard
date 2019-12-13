@@ -38,7 +38,7 @@ const DailySnapshot = ({ forDate, events, weatherData, setTheme }) => {
   }, [forDate, events, isToday]);
 
   return (
-    <div className={ isToday ? "primary" : "secondary" }>
+    <div className={ "calendar--day "+ (isToday ? "primary" : "secondary") }>
       <Header date={ forDate } weather={ weather } setTheme={ setTheme } compact={ !isToday } />
       <EventList events={ dailyEvents } forDate={ forDate } compact={ !isToday } />
     </div>
