@@ -21,6 +21,7 @@ const App = () => {
 
   const [ location, setLocation ] = useState(null);
   const [ weatherData, setWeatherData ] = useState(null);
+  const [ theme, setTheme ] = useState(null);
 
   // onload, get calendar events and weather
   useEffect(() => {
@@ -84,6 +85,10 @@ const App = () => {
     }
   }, [signedIn]);
 
+  useEffect(() => {
+
+  }, [theme]);
+
 
   if (!signedIn) {
     return (
@@ -95,7 +100,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <main className={ theme }>
       <div className="left">
 
         <Clock appDate={ date } setAppDate={ setDate } />
@@ -104,6 +109,7 @@ const App = () => {
           forDate={ date }
           events={ events }
           weatherData={ weatherData }
+          setTheme={ setTheme }
         />
 
       </div>
@@ -121,7 +127,7 @@ const App = () => {
         ))}
 
       </div>
-    </>
+    </main>
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import setSkycon from '../helpers/skycons';
+import { setSkycon, setColor } from '../helpers/skycons';
 
-const Weather = ({ weather, compact }) => {
+const Weather = ({ weather, setTheme, compact }) => {
 
   const [ current, setCurrent ] = useState(null);
   const [ forecast, setForecast ] = useState(null);
@@ -20,11 +20,17 @@ const Weather = ({ weather, compact }) => {
 
     if (current) {
       setSkycon(canvas.current, current.icon);
+
+      // tell App.js to update the background image
+      if (setTheme) {
+        setTheme(current.icon);
+      }
+
     } else if (forecast) {
       setSkycon(canvas.current, forecast.icon);
     }
 
-  }, [current, forecast]);
+  }, [current, forecast, setTheme]);
 
   const canvasDimensions = compact ? 60 : 150;
 

@@ -5,7 +5,7 @@ import { isSameDate, getDayTimeParams, rangesOverlap } from '../helpers/dateTime
 import Header from './Header';
 import EventList from './EventList';
 
-const DailySnapshot = ({ forDate, events, weatherData }) => {
+const DailySnapshot = ({ forDate, events, weatherData, setTheme }) => {
 
   const [ isToday, setIsToday ] = useState(false);
   const [ weather, setWeather ] = useState({});
@@ -39,7 +39,7 @@ const DailySnapshot = ({ forDate, events, weatherData }) => {
 
   return (
     <div className={ isToday ? "primary" : "secondary" }>
-      <Header date={ forDate } weather={ weather } compact={ !isToday } />
+      <Header date={ forDate } weather={ weather } setTheme={ setTheme } compact={ !isToday } />
       <EventList events={ dailyEvents } forDate={ forDate } compact={ !isToday } />
     </div>
   );

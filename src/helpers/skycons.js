@@ -18,9 +18,13 @@ const skycon = {
 // default
 const def = Skycons.WIND;
 
+function setColor(color) {
+  skycons = new Skycons({ "color": color });
+}
+
 function setSkycon(element, description) {
   skycons.set(element, skycon[description] || def);
   skycons.play();
 }
 
-export default setSkycon;
+export { setSkycon, setColor };
