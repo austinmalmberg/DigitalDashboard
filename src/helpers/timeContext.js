@@ -9,7 +9,7 @@ function getContextRemarks(date, dateRange) {
 
   if (startingToday && endingToday) {
     // just return the time if the event begins and ends the same day
-    return [ formatTime(rangeStart), `-${formatTime(rangeEnd)}` ];
+    return [ formatTime(rangeStart), `- ${formatTime(rangeEnd)}` ];
   }
 
   if (startingToday && rangeEnd.getTime() > dayEnd.getTime()) {
