@@ -40,7 +40,6 @@ const App = () => {
     if (location) {
       async function updateWeather() {
         const weather = await getWeather(location);
-        console.log(weather);
         setWeatherData(weather);
       }
 
