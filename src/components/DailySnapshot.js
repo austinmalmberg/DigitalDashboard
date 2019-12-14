@@ -21,6 +21,8 @@ const DailySnapshot = ({ forDate, events, weatherData, setTheme }) => {
         currently: isSameDate(forDate, weatherData.currently.time * 1000) ? weatherData.currently : null,
         forecast: weatherData.daily.data.find(day => isSameDate(forDate, new Date(day.time * 1000)))
       });
+    } else {
+      setWeather(null);
     }
   }, [forDate, weatherData]);
 
