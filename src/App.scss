@@ -60,6 +60,8 @@ main {
   background-size: 100% auto;
   background-repeat: no-repeat;
 
+  transition: background-image 1000ms ease-in-out;
+
   & > * {
     margin: 0.2rem;
 
@@ -100,6 +102,8 @@ main {
 
   background-color: $default-header-color;
   color: $default-calendar-color;
+
+  transition: background-color 1000ms ease-in-out;
 }
 
 /* CALENDAR DAYS */
@@ -110,6 +114,8 @@ main {
   border-width: 1px;
   border-style: solid;
   border-radius: 0.2rem;
+
+  transition: background-color 1000ms ease-in-out;
 }
 
 .primary {
