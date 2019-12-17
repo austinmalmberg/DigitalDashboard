@@ -19,7 +19,10 @@ const skycon = {
 const def = Skycons.WIND;
 
 function setColor(color) {
-  skycons = new Skycons({ "color": color });
+
+  if (skycons.color !== color) {
+    skycons = new Skycons({ "color": color });
+  }
 }
 
 function setSkycon(element, description) {
