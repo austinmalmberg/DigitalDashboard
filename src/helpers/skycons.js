@@ -19,15 +19,14 @@ const skycon = {
 const def = Skycons.WIND;
 
 function setColor(color) {
-
   if (skycons.color !== color) {
     skycons = new Skycons({ "color": color });
   }
 }
 
-function setSkycon(element, description) {
+function addSkyconToCanvas(element, description) {
   skycons.set(element, skycon[description] || def);
   skycons.play();
 }
 
-export { setSkycon, setColor };
+export { addSkyconToCanvas, setColor };

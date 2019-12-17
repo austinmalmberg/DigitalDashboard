@@ -16,7 +16,7 @@ const Header = ({ date, weather, theme, setTheme, compact }) => {
         <h2 className="day">{ formatDate(date, { weekday: 'long' }) }</h2>
         <p className="date">{ formatDate(date, options) }</p>
       </div>
-      <Weather weather={ weather } theme={ theme } setTheme={ setTheme } compact={ compact } />
+      <Weather weather={ weather } setTheme={ setTheme } compact={ compact } />
     </div>
   );
 };

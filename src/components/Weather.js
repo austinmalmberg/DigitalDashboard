@@ -1,45 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { setSkycon, setColor } from '../helpers/skycons';
+import { addSkyconToCanvas, setColor } from '../helpers/skycons';
 
 import getTheme from '../helpers/themes';
 
-const Weather = ({ weather, theme, setTheme, compact }) => {
+const Weather = ({ weather, setTheme, compact }) => {
 
-  const [ current, setCurrent ] = useState(null);
+  const [ currentWeather, setCurrentWeather ] = useState(null);
   const [ forecast, setForecast ] = useState(null);
 
   const canvas = useRef(null);
 
   useEffect(() => {
     if (weather) {
-      setCurrent(weather.currently);
+      setCurrentWeather(weather.currently);
       setForecast(weather.forecast);
     }
   }, [weather]);
 
   useEffect(() => {
 
-    if (current && setTheme) {
-      const newtheme = getTheme(current.icon);
-      console.log(`Changing theme to ${current.icon}`);
+    if (currentWeather && setTheme) {
+      const theme = getTheme(currentWeather.icon);
+      setColor(theme.header.color);
+      addSkyconToCanvas(canvas.current, currentWeather.icon);
+      setTheme(theme);
 
-      // change skycon color
-      setColor(newtheme.header.color);
+    } else if (forecast) {
+      addSkyconToCanvas(canvas.current, forecast.icon);
 
-      setSkycon(canvas.current, current.icon);
-
-      // tell App.js to update the theme
-      setTheme(newtheme);
     }
 
-  }, [current, setTheme]);
-
-  useEffect(() => {
-    if (forecast) {
-      setSkycon(canvas.current, forecast.icon);
-    }
-  }, [forecast]);
+  }, [currentWeather, forecast, setTheme]);
 
   const canvasDimensions = compact ? 60 : 150;
 
@@ -55,7 +47,7 @@ const Weather = ({ weather, theme, setTheme, compact }) => {
     <div className="weather">
       <div className="temperatures">
         { forecast && <p className="temp hi">Hi: { Math.round(forecast.temperatureMax) }</p> }
-        { current && <p className="temp current">{ Math.round(current.temperature) }</p> }
+        { currentWeather && <p className="temp current">{ Math.round(currentWeather.temperature) }</p> }
         { forecast && <p className="temp lo">Lo: { Math.round(forecast.temperatureMin) }</p> }
       </div>
       <figure className="icon">
