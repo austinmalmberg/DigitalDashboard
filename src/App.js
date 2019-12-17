@@ -39,7 +39,7 @@ const App = () => {
 
     if (location) {
       async function updateWeather() {
-        const weather = await getWeather(location, setWeatherData, (err) => {
+        await getWeather(location, setWeatherData, (err) => {
           console.log(`Unable to retrieve weather\n${err.status} ${err.statusText}`);
         });
       }
@@ -87,11 +87,7 @@ const App = () => {
 
     }
   }, [signedIn]);
-
-  useEffect(() => {
-
-  }, [theme]);
-
+  
 
   if (!signedIn) {
     return (
