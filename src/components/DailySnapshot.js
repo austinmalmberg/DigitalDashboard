@@ -8,7 +8,7 @@ import EventList from './EventList';
 const DailySnapshot = ({ forDate, events, weatherData, theme, setTheme }) => {
 
   const [ isToday, setIsToday ] = useState(false);
-  const [ weather, setWeather ] = useState({});
+  const [ weather, setWeather ] = useState({ currently: null, forecast: null });
   const [ dailyEvents, setDailyEvents ] = useState([]);
 
   useEffect(() => {
@@ -21,8 +21,6 @@ const DailySnapshot = ({ forDate, events, weatherData, theme, setTheme }) => {
         currently: isSameDate(forDate, weatherData.currently.time * 1000) ? weatherData.currently : null,
         forecast: weatherData.daily.data.find(day => isSameDate(forDate, new Date(day.time * 1000)))
       });
-    } else {
-      setWeather(null);
     }
   }, [forDate, weatherData]);
 
