@@ -4,7 +4,7 @@ import { formatTime, isSameDate, normalizeDate } from '../helpers/dateTime';
 
 import config from '../config';
 
-const Clock = ({ appDate, setAppDate }) => {
+const Clock = ({ appDate, setAppDate, theme }) => {
 
   const [ date, setDate ] = useState(new Date());
 
@@ -43,7 +43,7 @@ const Clock = ({ appDate, setAppDate }) => {
   useEffect(matchDates, [appDate, date]);
 
   return (
-    <div className="clock--panel">
+    <div className="clock--panel" style={ theme && theme.clock }>
       <h1 className="clock">{ formatTime(date, formatOptions) }</h1>
     </div>
   );

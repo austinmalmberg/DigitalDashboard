@@ -98,15 +98,16 @@ const App = () => {
   }
 
   return (
-    <main className={ theme }>
+    <main style={ theme && theme.main }>
       <div className="left">
 
-        <Clock appDate={ date } setAppDate={ setDate } />
+        <Clock appDate={ date } setAppDate={ setDate } theme={ theme } />
 
         <DailySnapshot
           forDate={ date }
           events={ events }
           weatherData={ weatherData }
+          theme={ theme }
           setTheme={ setTheme }
         />
 
@@ -121,6 +122,7 @@ const App = () => {
             forDate={ futureDate }
             events={ events }
             weatherData={ weatherData }
+            theme={ theme }
           />
         ))}
 
