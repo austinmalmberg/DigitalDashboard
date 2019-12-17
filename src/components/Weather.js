@@ -20,19 +20,26 @@ const Weather = ({ weather, theme, setTheme, compact }) => {
 
   useEffect(() => {
 
-    if (current) {
-      if (theme) setColor(theme.header.color);
+    if (current && setTheme) {
+      const newtheme = getTheme(current.icon);
+      console.log(`Changing theme to ${current.icon}`);
+
+      // change skycon color
+      setColor(newtheme.header.color);
 
       setSkycon(canvas.current, current.icon);
 
-      // tell App.js to update the background image
-      if (setTheme) setTheme(getTheme(current.icon));
-
-    } else if (forecast) {
-      setSkycon(canvas.current, forecast.icon);
+      // tell App.js to update the theme
+      setTheme(newtheme);
     }
 
-  }, [current, forecast, theme, setTheme]);
+  }, [current, setTheme]);
+
+  useEffect(() => {
+    if (forecast) {
+      setSkycon(canvas.current, forecast.icon);
+    }
+  }, [forecast]);
 
   const canvasDimensions = compact ? 60 : 150;
 
