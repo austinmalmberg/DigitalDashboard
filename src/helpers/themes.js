@@ -2,6 +2,7 @@
 const themes = {
   "rain": {
     main: {
+      backgroundColor: "#c5dae5",
       backgroundImage: "url('images/rain.jpg')",
     },
     clock: {
@@ -19,24 +20,26 @@ const themes = {
 
   "clear-day": {
     main: {
+      backgroundColor: "#ffdeb0",
       backgroundImage: "url('images/clear-day.jpg')",
     },
     clock: {
       color: "black",
     },
     header: {
-      backgroundColor: "#4bcffa",
+      backgroundColor: "#578FB3",
       color: "black",
     },
     calendar: {
       backgroundColor: "white",
       color: "black",
-      borderColor: "#4bcffa",
+      borderColor: "#578FB3",
     },
   },
 
   "clear-night": {
     main: {
+      backgroundColor: "#081426",
       backgroundImage: "url('images/clear-night.jpg')",
     },
     clock: {
@@ -55,6 +58,7 @@ const themes = {
 
   "partly-cloudy-day": {
     main: {
+      backgroundColor: "#03509c",
       backgroundImage: "url('images/partly-cloudy-day.jpg')",
     },
     clock: {
@@ -73,17 +77,18 @@ const themes = {
 
   "partly-cloudy-night": {
     main: {
+      backgroundColor: "#0d0906",
       backgroundImage: "url('images/partly-cloudy-night.jpg')",
     },
     clock: {
-      color: "#B88430",
+      color: "#E3B271",
     },
     header: {
       backgroundColor: "black",
-      color: "#B88430",
+      color: "#E3B271",
     },
     calendar: {
-      backgroundColor: "#B88430",
+      backgroundColor: "#E3B271",
       color: "black",
       borderColor: "black",
     },
@@ -91,6 +96,7 @@ const themes = {
 
   "cloudy": {
     main: {
+      backgroundColor: "#97a3b9",
       backgroundImage: "url('images/cloudy.jpg')",
     },
     clock: {
@@ -109,6 +115,7 @@ const themes = {
 
   "snow": {
     main: {
+      backgroundColor: "#84b8de",
       backgroundImage: "url('images/snow.jpg')",
     },
     clock: {
@@ -127,6 +134,7 @@ const themes = {
 
   "sleet": {
     main: {
+      backgroundColor: "#3f3f3f",
       backgroundImage: "url('images/sleet.jpg')",
     },
     clock: {
@@ -145,24 +153,26 @@ const themes = {
 
   "wind": {
     main: {
+      backgroundColor: "#f9f6f1",
       backgroundImage: "url('images/wind.jpg')",
     },
     clock: {
       color: "#331800",
     },
     header: {
-      backgroundColor: "#686B13",
+      backgroundColor: "#d0ba86",
       color: "#331800",
     },
     calendar: {
       backgroundColor: "white",
       color: "#331800",
-      borderColor: "#686B13",
+      borderColor: "#d0ba86",
     },
   },
 
   "fog": {
     main: {
+      backgroundColor: "#8895a6",
       backgroundImage: "url('images/fog.jpg')",
     },
     clock: {
