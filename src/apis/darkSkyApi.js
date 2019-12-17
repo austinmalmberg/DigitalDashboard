@@ -23,10 +23,11 @@ async function getWeather(location, callback, onError) {
 
   } else {
 
-    if (onError)
+    if (onError) {
       onError(response);
-
-    return null;
+    } else {
+      return null;
+    }
   }
 }
 
