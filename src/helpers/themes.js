@@ -1,6 +1,7 @@
 
 const themes = {
   "rain": {
+    name: "rain",
     main: {
       backgroundColor: "#c5dae5",
       backgroundImage: "url('images/rain.jpg')",
@@ -19,6 +20,7 @@ const themes = {
   },
 
   "clear-day": {
+    name: "clear-day",
     main: {
       backgroundColor: "#ffdeb0",
       backgroundImage: "url('images/clear-day.jpg')",
@@ -38,6 +40,7 @@ const themes = {
   },
 
   "clear-night": {
+    name: "clear-night",
     main: {
       backgroundColor: "#081426",
       backgroundImage: "url('images/clear-night.jpg')",
@@ -57,6 +60,7 @@ const themes = {
   },
 
   "partly-cloudy-day": {
+    name: "partly-cloudy-day",
     main: {
       backgroundColor: "#03509c",
       backgroundImage: "url('images/partly-cloudy-day.jpg')",
@@ -76,6 +80,7 @@ const themes = {
   },
 
   "partly-cloudy-night": {
+    name: "partly-cloudy-night",
     main: {
       backgroundColor: "#0d0906",
       backgroundImage: "url('images/partly-cloudy-night.jpg')",
@@ -95,6 +100,7 @@ const themes = {
   },
 
   "cloudy": {
+    name: "cloudy",
     main: {
       backgroundColor: "#97a3b9",
       backgroundImage: "url('images/cloudy.jpg')",
@@ -114,6 +120,7 @@ const themes = {
   },
 
   "snow": {
+    name: "snow",
     main: {
       backgroundColor: "#84b8de",
       backgroundImage: "url('images/snow.jpg')",
@@ -133,6 +140,7 @@ const themes = {
   },
 
   "sleet": {
+    name: "sleet",
     main: {
       backgroundColor: "#3f3f3f",
       backgroundImage: "url('images/sleet.jpg')",
@@ -152,6 +160,7 @@ const themes = {
   },
 
   "wind": {
+    name: "wind",
     main: {
       backgroundColor: "#f9f6f1",
       backgroundImage: "url('images/wind.jpg')",
@@ -171,6 +180,7 @@ const themes = {
   },
 
   "fog": {
+    name: "fog",
     main: {
       backgroundColor: "#8895a6",
       backgroundImage: "url('images/fog.jpg')",
