@@ -39,8 +39,9 @@ const App = () => {
 
     if (location) {
       async function updateWeather() {
-        const weather = await getWeather(location);
-        setWeatherData(weather);
+        const weather = await getWeather(location, setWeatherData, (err) => {
+          console.log(`Unable to retrieve weather\n${err.status} ${err.statusText}`);
+        });
       }
 
       updateWeather();
@@ -54,9 +55,11 @@ const App = () => {
     }
 
     return () => {
-      if (weatherId) clearInterval(weatherId);
+      if (weatherId) {
+        clearInterval(weatherId);
+        console.log('cleaned up weather interval');
+      }
 
-      console.log('clean up weather interval');
     };
   }, [location, date]);
 
@@ -77,9 +80,11 @@ const App = () => {
 
     // clean up interval
     return () => {
-      if (intervalId) clearInterval(intervalId);
+      if (intervalId) {
+        clearInterval(intervalId);
+        console.log('cleaned up calendar interval');
+      }
 
-      console.log('clean up calendar interval');
     }
   }, [signedIn]);
 
