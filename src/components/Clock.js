@@ -25,9 +25,12 @@ const Clock = ({ appDate, setAppDate, theme }) => {
   }
 
   const formatOptions = {
-    timeStyle: config.displaySeconds ? 'medium' : 'short',
+    hour: 'numeric',
+    minute: '2-digit',
     hour12: !config.militaryTime,
   };
+  if (config.displaySeconds)
+    formatOptions.second = '2-digit';
 
   useEffect(() => {
     const now = new Date();

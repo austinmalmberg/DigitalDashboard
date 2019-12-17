@@ -22,7 +22,8 @@ function formatTime(date, options) {
 
   if (!options) {
     options = {
-      timeStyle: 'short',
+      hour: 'numeric',
+      minute: '2-digit',
       hour12: !config.militaryTime,
     };
   } else if (!options.hour12) {
