@@ -17,10 +17,12 @@ const DailySnapshot = ({ forDate, events, weatherData, theme, setTheme }) => {
 
   useEffect(() => {
     if (weatherData) {
-      setWeather({
-        currently: isSameDate(forDate, weatherData.currently.time * 1000) ? weatherData.currently : null,
-        forecast: weatherData.daily.data.find(day => isSameDate(forDate, new Date(day.time * 1000)))
-      });
+      const forecast = weatherData.daily.data.find(day => isSameDate(forDate, new Date(day.time * 1000)));
+      let currently;
+      if (isSameDate(forDate, weatherData.currently.time * 1000))
+        currently = weatherData.currently;
+
+      setWeather({ forecast, currently });
     }
   }, [forDate, weatherData]);
 
@@ -31,7 +33,12 @@ const DailySnapshot = ({ forDate, events, weatherData, theme, setTheme }) => {
       const start = new Date(event.start.dateTime || `${event.start.date}T00:00:00`);
       const end = new Date(event.end.dateTime || `${event.end.date}T00:00:00`);
 
-      return rangesOverlap([start, end], timeRange);
+      // subtract 1 second from the end to prevent all-day events from showing up the next day
+      // i.e. an all-day event will go from today @ 12:00 AM until tomorrow @ 12:00 AM. But we
+      // don't want the event showing up tomorrow
+      const end_noOverlap = new Date(end.getTime() - 1000);
+
+      return rangesOverlap([start, end_noOverlap], timeRange);
     });
 
     setDailyEvents(happeningToday);
