@@ -33,7 +33,9 @@ function formatTime(date, options) {
   return date.toLocaleTimeString(undefined, options);
 }
 
-
+/**
+ * Formats the given date based on the options provided
+*/
 function formatDate(date, options) {
 
   if (!date) return formatDate(new Date());
@@ -49,6 +51,9 @@ function formatDate(date, options) {
   return date.toLocaleDateString(undefined, options);
 }
 
+/*
+ * Tests whether two Date objects fall on the same date
+*/
 function isSameDate(d1, d2) {
   if ( !(d1 && d2) ) return false;
 
@@ -114,7 +119,9 @@ function addDays(dateTime, numDays) {
   return normalizeDate(dateTime);
 }
 
-// returns
+/**
+ * Takes a Date object and returns a new Date object with time set to 00:00:00 (12:00 AM)
+*/
 function normalizeDate(date) {
   if (!date) normalizeDate(new Date());
 
@@ -128,9 +135,11 @@ function normalizeDate(date) {
   return new Date(`${date.getMonth() + 1} ${date.getDate()} ${date.getFullYear()}`);
 }
 
-// returns an object with start and end times of given a date
-// start is the date at 12:00 AM (0:00)
-// end is the date at 11:59:59 PM (23:59:59)
+/**
+ * Returns an object with start and end times of given a date
+ * start is the date at 12:00 AM (0:00)
+ * end is the date at 11:59:59 PM (23:59:59)
+*/
 function getDayTimeParams(date) {
   if (!date) return getDayTimeParams(new Date());
 
