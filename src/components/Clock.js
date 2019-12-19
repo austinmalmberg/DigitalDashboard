@@ -8,22 +8,6 @@ const Clock = ({ appDate, setAppDate, theme }) => {
 
   const [ date, setDate ] = useState(new Date());
 
-  const matchDates = () => {
-    if (!isSameDate(date, appDate)) setAppDate(normalizeDate(date));
-  };
-
-  // syncs the interval with the system clock so they tick together
-  const syncClocks = (now, updateInterval) => {
-    let intervalId;
-
-    const timeoutId = setTimeout(() => {
-      setDate(new Date());
-      intervalId = setInterval(() => setDate(new Date()), updateInterval);
-    }, updateInterval - now.getTime() % updateInterval);
-
-    return [ timeoutId, intervalId ];
-  }
-
   const formatOptions = {
     hour: 'numeric',
     minute: '2-digit',
@@ -37,13 +21,28 @@ const Clock = ({ appDate, setAppDate, theme }) => {
     const updateInterval = config.displaySeconds ? 1000 : 1000 * 60;
     const [ timeoutId, intervalId ] = syncClocks(now, updateInterval);
 
+    // syncs the interval with the system clock so they tick together
+    function syncClocks(now, updateInterval) {
+      let intervalId;
+      const timeoutId = setTimeout(() => {
+        setDate(new Date());
+        intervalId = setInterval(() => setDate(new Date()), updateInterval);
+      }, updateInterval - now.getTime() % updateInterval);
+
+      return [ timeoutId, intervalId ];
+    }
+
+    // clean up
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
       if (intervalId) clearInterval(intervalId);
     };
   }, []);
 
-  useEffect(matchDates, [appDate, date]);
+  useEffect(() => {
+    // updates the appDate, when necessary
+    if (!isSameDate(date, appDate)) setAppDate(normalizeDate(date));
+  }, [date, appDate, setAppDate]);
 
   return (
     <div className="clock--panel" style={ theme && theme.clock }>

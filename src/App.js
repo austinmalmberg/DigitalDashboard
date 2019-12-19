@@ -38,11 +38,11 @@ const App = () => {
     let weatherId;
 
     if (location) {
-      async function updateWeather() {
+      const updateWeather = async () => {
         await getWeather(location, setWeatherData, (err) => {
           console.log(`Unable to retrieve weather\n${err.status} ${err.statusText}`);
         });
-      }
+      };
 
       updateWeather();
       // schedule periodic weather updates
@@ -87,7 +87,7 @@ const App = () => {
 
     }
   }, [signedIn]);
-  
+
 
   if (!signedIn) {
     return (

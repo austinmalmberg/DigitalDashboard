@@ -27,7 +27,8 @@ async function initClient(signInListener) {
     // change isAuthorized state when signed in status changes
     gapi.auth2.getAuthInstance().isSignedIn.listen(signInListener);
     signInListener(gapi.auth2.getAuthInstance().isSignedIn.get());
-  }).catch((err) => console.log('could not retrieve calendar data', err));
+    
+  }).catch((err) => console.log('Could not retrieve calendar data', err));
 }
 
 function signIn() {
