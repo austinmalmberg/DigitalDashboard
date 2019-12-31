@@ -20,17 +20,26 @@ const Event = ({ event, forDate, compact }) => {
 
     setStart(startRemarks);
     // only set end time if not compact or no startRemarks
-    if ((!compact || !startRemarks) && endRemarks) {
+    if (endRemarks && (!compact || !startRemarks)) {
       setEnd(endRemarks);
     }
 
-    const contributor = config.calendar.contributors.find(contributor => contributor.email === event.creator.email);
+    let summary = event.summary;
 
-    if (contributor) setContributor(contributor);
+    if (summary.includes('[all]')) {
 
-    setSummary(event.summary);
+      summary = summary.split('[all]').join('').trim();
 
-  }, [event, forDate, compact])
+    } else {
+      // try to get the contributor from the config file that matches the creator of the event
+      const contributor = config.calendar.contributors.find(contributor => contributor.email === event.creator.email);
+
+      if (contributor) setContributor(contributor);
+    }
+
+    setSummary(summary);
+
+  }, [event, forDate, compact]);
 
   return (
     <div className="event">
