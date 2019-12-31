@@ -35,7 +35,7 @@ const Weather = ({ weather, setTheme, compact }) => {
 
   const canvasDimensions = compact ? 60 : 150;
 
-  if (!weather) {
+  if (!currentWeather && !forecast) {
     return (
       <div className="weather">
         <p>No weather data</p>
