@@ -17,7 +17,7 @@ function getContextRemarks(date, dateRange) {
   }
 
   if (endingToday && rangeStart.getTime() < dayStart.getTime()) {
-    return [ null, `until ${formatTime(rangeEnd)}` ];
+    return [ null, `'til ${formatTime(rangeEnd)}` ];
   }
 
 
