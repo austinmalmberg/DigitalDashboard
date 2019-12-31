@@ -4,7 +4,7 @@ const themes = {
     name: "rain",
     main: {
       backgroundColor: "#c5dae5",
-      backgroundImage: "url('images/rain.jpg')",
+      backgroundImage: "url('backgrounds/rain.jpg')",
     },
     clock: {
       color: "black",
@@ -23,7 +23,7 @@ const themes = {
     name: "clear-day",
     main: {
       backgroundColor: "#ffdeb0",
-      backgroundImage: "url('images/clear-day.jpg')",
+      backgroundImage: "url('backgrounds/clear-day.jpg')",
     },
     clock: {
       color: "black",
@@ -43,7 +43,7 @@ const themes = {
     name: "clear-night",
     main: {
       backgroundColor: "#081426",
-      backgroundImage: "url('images/clear-night.jpg')",
+      backgroundImage: "url('backgrounds/clear-night.jpg')",
     },
     clock: {
       color: "#d2dae2",
@@ -63,7 +63,7 @@ const themes = {
     name: "partly-cloudy-day",
     main: {
       backgroundColor: "#03509c",
-      backgroundImage: "url('images/partly-cloudy-day.jpg')",
+      backgroundImage: "url('backgrounds/partly-cloudy-day.jpg')",
     },
     clock: {
       color: "white",
@@ -83,7 +83,7 @@ const themes = {
     name: "partly-cloudy-night",
     main: {
       backgroundColor: "#0d0906",
-      backgroundImage: "url('images/partly-cloudy-night.jpg')",
+      backgroundImage: "url('backgrounds/partly-cloudy-night.jpg')",
     },
     clock: {
       color: "#E3B271",
@@ -103,7 +103,7 @@ const themes = {
     name: "cloudy",
     main: {
       backgroundColor: "#97a3b9",
-      backgroundImage: "url('images/cloudy.jpg')",
+      backgroundImage: "url('backgrounds/cloudy.jpg')",
     },
     clock: {
       color: "black",
@@ -123,7 +123,7 @@ const themes = {
     name: "snow",
     main: {
       backgroundColor: "#84b8de",
-      backgroundImage: "url('images/snow.jpg')",
+      backgroundImage: "url('backgrounds/snow.jpg')",
     },
     clock: {
       color: "white",
@@ -143,7 +143,7 @@ const themes = {
     name: "sleet",
     main: {
       backgroundColor: "#3f3f3f",
-      backgroundImage: "url('images/sleet.jpg')",
+      backgroundImage: "url('backgrounds/sleet.jpg')",
     },
     clock: {
       color: "white",
@@ -163,7 +163,7 @@ const themes = {
     name: "wind",
     main: {
       backgroundColor: "#f9f6f1",
-      backgroundImage: "url('images/wind.jpg')",
+      backgroundImage: "url('backgrounds/wind.jpg')",
     },
     clock: {
       color: "#331800",
@@ -183,7 +183,7 @@ const themes = {
     name: "fog",
     main: {
       backgroundColor: "#8895a6",
-      backgroundImage: "url('images/fog.jpg')",
+      backgroundImage: "url('backgrounds/fog.jpg')",
     },
     clock: {
       color: "#dfe6e9",
