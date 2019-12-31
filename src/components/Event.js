@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
+import Contributor from './Contributor';
+
 import getContextRemarks from '../helpers/timeContext';
+import config from '../config';
 
 const Event = ({ event, forDate, compact }) => {
 
   const [ start, setStart ] = useState(null);
   const [ end, setEnd ] = useState(null);
+  const [ contributor, setContributor ] = useState(undefined);
   const [ summary, setSummary ] = useState('');
 
   useEffect(() => {
@@ -20,18 +24,27 @@ const Event = ({ event, forDate, compact }) => {
       setEnd(endRemarks);
     }
 
+    const contributor = config.calendar.contributors.find(contributor => contributor.email === event.creator.email);
+
+    if (contributor) setContributor(contributor);
+
     setSummary(event.summary);
+
   }, [event, forDate, compact])
 
   return (
     <div className="event">
       { (start || end) &&
-        <div className="event--time muted">
+        <div className="event--time muted" /*style={ contributor && { color: contributor.prefColor } }*/>
           { start && <p>{ start }</p> }
           { end && <p>{ end }</p> }
         </div>
       }
-      <h3 className="event--summary">{ summary }</h3>
+
+      <div className="event--details">
+        { contributor && <Contributor contributor={ contributor } /> }
+        <h3 className="event--summary">{ summary }</h3>
+      </div>
     </div>
   );
 };
