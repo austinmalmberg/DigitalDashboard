@@ -69,13 +69,13 @@ const themes = {
       color: "white",
     },
     header: {
-      backgroundColor: "#0984e3",
+      backgroundColor: "#0973D6",
       color: "white",
     },
     calendar: {
       backgroundColor: "white",
       color: "black",
-      borderColor: "#0984e3",
+      borderColor: "#0973D6",
     },
   },
 
@@ -86,14 +86,14 @@ const themes = {
       backgroundImage: "url('backgrounds/partly-cloudy-night.jpg')",
     },
     clock: {
-      color: "#E3B271",
+      color: "#FFDFB6",
     },
     header: {
       backgroundColor: "black",
-      color: "#E3B271",
+      color: "#FFDFB6",
     },
     calendar: {
-      backgroundColor: "#E3B271",
+      backgroundColor: "#FFDFB6",
       color: "black",
       borderColor: "black",
     },
@@ -109,13 +109,13 @@ const themes = {
       color: "black",
     },
     header: {
-      backgroundColor: "#40739e",
+      backgroundColor: "#8F8594",
       color: "black",
     },
     calendar: {
       backgroundColor: "white",
       color: "black",
-      borderColor: "#40739e",
+      borderColor: "#8F8594",
     },
   },
 

@@ -22,9 +22,9 @@ Weather is powered by the Dark Sky API. (Free) daily API calls are capped at 1,0
 
 ### Background images
 
-  - **Clear Day** by Kent Pilcher, https://unsplash.com/photos/87MIF4vqHWg
+  - **Clear Day** by Alexey Ruban, https://unsplash.com/photos/MmhZBm5ThbU
   - **Clear Night** by Noah Silliman, https://unsplash.com/photos/Bu2-LpaD0kU
-  - **Cloudy** by Zbynek Burival, https://unsplash.com/photos/8iZG31eXkks
+  - **Cloudy** by Daria Nepriakhina, https://unsplash.com/photos/auMjWDfTFhI
   - **Fog** by Nathan Anderson, https://unsplash.com/photos/v1pu3WSFieE
   - **Partly Cloudy Day** by Ian Baldwin, https://unsplash.com/photos/UA1UN-r9E5Y
   - **Partly Cloudy Night** by Fezbot2000, https://unsplash.com/photos/g3QBQto9Jt0
