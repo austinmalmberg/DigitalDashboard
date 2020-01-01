@@ -1,7 +1,7 @@
 
 import config from '../config';
 
-import { addDays, normalizeDate } from '../helpers/dateTime';
+import { addDays, getStartingDateTime } from '../helpers/dateTime';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
@@ -27,7 +27,7 @@ async function initClient(signInListener) {
     // change isAuthorized state when signed in status changes
     gapi.auth2.getAuthInstance().isSignedIn.listen(signInListener);
     signInListener(gapi.auth2.getAuthInstance().isSignedIn.get());
-    
+
   }).catch((err) => console.log('Could not retrieve calendar data', err));
 }
 
@@ -44,7 +44,7 @@ async function loadCalendarEvents(eventsListener) {
 
   const response = await gapi.client.calendar.events.list({
     'calendarId': config.calendar.calendarId || 'primary',
-    'timeMin': (normalizeDate(now)).toISOString(),
+    'timeMin': (getStartingDateTime(now)).toISOString(),
     'timeMax': (addDays(now, config.calendar.daysToSync || 7)).toISOString(),
     'showDeleted': false,
     'singleEvents': true,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { formatTime, isSameDate, normalizeDate } from '../helpers/dateTime';
+import { formatTime, isSameDate, getStartingDateTime } from '../helpers/dateTime';
 
 import config from '../config';
 
@@ -41,7 +41,7 @@ const Clock = ({ appDate, setAppDate, theme }) => {
 
   useEffect(() => {
     // updates the appDate, when necessary
-    if (!isSameDate(date, appDate)) setAppDate(normalizeDate(date));
+    if (!isSameDate(date, appDate)) setAppDate(getStartingDateTime(date));
   }, [date, appDate, setAppDate]);
 
   return (

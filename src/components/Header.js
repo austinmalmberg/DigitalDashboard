@@ -6,9 +6,10 @@ import { formatDate } from '../helpers/dateTime';
 
 const Header = ({ date, weather, theme, setTheme, compact }) => {
 
-  const options = compact ?
-    { month: 'numeric', day: 'numeric' }:
-    { month: 'long', day: 'numeric' };
+  const options = {
+    month: 'long',
+    day: 'numeric'
+  };
 
   return (
     <div style={ theme && theme.header } className="header">

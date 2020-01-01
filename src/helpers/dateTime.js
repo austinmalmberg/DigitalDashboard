@@ -116,14 +116,14 @@ function addDays(dateTime, numDays) {
     }
   }
 
-  return normalizeDate(dateTime);
+  return getStartingDateTime(dateTime);
 }
 
 /**
  * Takes a Date object and returns a new Date object with time set to 00:00:00 (12:00 AM)
 */
-function normalizeDate(date) {
-  if (!date) normalizeDate(new Date());
+function getStartingDateTime(date) {
+  if (!date) getStartingDateTime(new Date());
 
   try {
     if (!(date instanceof Date) ) date = new Date(date);
@@ -143,7 +143,7 @@ function normalizeDate(date) {
 function getDayTimeParams(date) {
   if (!date) return getDayTimeParams(new Date());
 
-  const start = normalizeDate(date);
+  const start = getStartingDateTime(date);
   const end = new Date(addDays(start, 1).getTime() - 1000);
 
   return [ start, end ];
@@ -158,4 +158,4 @@ function rangesOverlap(a, b) {
         (aStart <= bStart && bStart <= aEnd);
 }
 
-export { formatTime, formatDate, isSameDate, dateWithinRange, addDays, normalizeDate, getDayTimeParams, rangesOverlap };
+export { formatTime, formatDate, isSameDate, dateWithinRange, addDays, getStartingDateTime, getDayTimeParams, rangesOverlap };

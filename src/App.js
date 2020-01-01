@@ -9,12 +9,12 @@ import getWeather from './apis/darkSkyApi';
 import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
 
 import config from './config';
-import { addDays, normalizeDate } from './helpers/dateTime';
+import { addDays, getStartingDateTime } from './helpers/dateTime';
 
 const App = () => {
 
   // updates daily via the Clock component
-  const [ date, setDate ] = useState(normalizeDate(new Date()));
+  const [ date, setDate ] = useState(getStartingDateTime(new Date()));
 
   const [ signedIn, setSignedIn ] = useState(false);
   const [ events, setEvents ] = useState([]);
