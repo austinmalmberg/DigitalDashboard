@@ -1,9 +1,13 @@
+
+
 import React, { useState, useEffect } from 'react';
 
 import Contributor from './Contributor';
 
-import getContextRemarks from '../helpers/timeContext';
 import config from '../config';
+
+import getContextRemarks from '../helpers/timeContext';
+import getAssignee from '../helpers/contributorFlags';
 
 const Event = ({ event, forDate, compact }) => {
 
@@ -13,6 +17,7 @@ const Event = ({ event, forDate, compact }) => {
   const [ summary, setSummary ] = useState('');
 
   useEffect(() => {
+
     const startDate = new Date(event.start.dateTime || `${event.start.date}T00:00:00`);
     const endDate = new Date(event.end.dateTime || `${event.end.date}T00:00:00`);
 
@@ -24,20 +29,8 @@ const Event = ({ event, forDate, compact }) => {
       setEnd(endRemarks);
     }
 
-    let summary = event.summary;
-
-    if (summary.includes('[all]')) {
-
-      summary = summary.split('[all]').join('').trim();
-
-    } else {
-      // try to get the contributor from the config file that matches the creator of the event
-      const contributor = config.calendar.contributors.find(contributor => contributor.email === event.creator.email);
-
-      if (contributor) setContributor(contributor);
-    }
-
-    setSummary(summary);
+    setContributor(getAssignee(event));
+    setSummary(event.summary);
 
   }, [event, forDate, compact]);
 
