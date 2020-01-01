@@ -37,7 +37,7 @@ const Event = ({ event, forDate, compact }) => {
   return (
     <div className="event">
       { (start || end) &&
-        <div className="event--time muted" /*style={ contributor && { color: contributor.prefColor } }*/>
+        <div className="event--time muted">
           { start && <p>{ start }</p> }
           { end && <p>{ end }</p> }
         </div>
