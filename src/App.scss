@@ -167,6 +167,7 @@ main {
   & .contributor {
     position: absolute;
     top: -0.8em;
+    left: -0.6em;
 
     transform: rotate(-15deg);
 
@@ -184,7 +185,7 @@ main {
 .event--summary {
   display: inline-block;
   margin: 0;
-  margin-left: 0.6em;
+  margin-left: 0.4em;
 
   font-weight: normal;
 
@@ -202,12 +203,13 @@ main {
 }
 
 .event--time {
-  padding-right: 0.25em;
-  margin-right: 0.5em;
+  padding-right: 0.5em;
+  margin-right: 0.25em;
 
   text-align: right;
 
-  border-right: 1px solid $default-header-color;
+  border-right-width: 1px;
+  border-right-style: solid;
 
   & > * {
     margin: 0;
