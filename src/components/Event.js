@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 
 import EventTag from './EventTag';
 
-import config from '../config';
-
 import getContextRemarks from '../helpers/timeContext';
 import getTag from '../helpers/eventTags';
 

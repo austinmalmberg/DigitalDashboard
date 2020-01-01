@@ -3,8 +3,6 @@ async function getWeather(location, callback, onError) {
 
   const { latitude, longitude } = location;
 
-  console.log(`Fetching weather data`);
-
   const response = await fetch(`/darksky`, {
     method: 'POST',
     body: JSON.stringify({ latitude, longitude }),

@@ -30,8 +30,6 @@ const App = () => {
 
     // updates authorization state when google calendar api is loaded
     loadApiClient(setSignedIn);
-
-    console.log('initialize application');
   }, []);
 
   useEffect(() => {
@@ -46,20 +44,11 @@ const App = () => {
 
       updateWeather();
       // schedule periodic weather updates
-      weatherId = setInterval(updateWeather, process.env.WEATHER_SYNC_INTERVAL || 5 * 60 * 1000);
-
-      console.log('initialize weather');
-    } else {
-
-      console.log('could not initialize weather');
+      weatherId = setInterval(updateWeather, process.env.WEATHER_SYNC_INTERVAL || 6 * 60 * 1000);
     }
 
     return () => {
-      if (weatherId) {
-        clearInterval(weatherId);
-        console.log('cleaned up weather interval');
-      }
-
+      if (weatherId) clearInterval(weatherId);
     };
   }, [location, date]);
 
@@ -71,20 +60,11 @@ const App = () => {
       // load calendar events
       loadCalendarEvents(setEvents);
       intervalId = setInterval(() => loadCalendarEvents(setEvents), process.env.CALENDAR_SYNC_INTERVAL || 5 * 60 * 1000);
-
-      console.log('initialize calendar');
-    } else {
-
-      console.log('could not initialize calendar');
     }
 
     // clean up interval
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-        console.log('cleaned up calendar interval');
-      }
-
+      if (intervalId) clearInterval(intervalId);
     }
   }, [signedIn]);
 
