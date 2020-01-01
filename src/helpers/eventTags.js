@@ -7,7 +7,7 @@ import config from '../config';
  *
  * 1. Check the event summary for the first occurrence of brackets
  *   a. If it's a number, get the contributor at that index from the config file
- *   b. Otherwise, return a generic contributor with the displayName set to the
+ *   b. Otherwise, return a generic contributor with the displayText set to the
  *      value of the string
  * 2.
  *
@@ -18,7 +18,7 @@ import config from '../config';
  *
  * @event {Google Calendar Event} - the calendar event
 */
-function getAssignee (event) {
+function getTag (event) {
   const re = /\s*\[.+\]\s*/g;
 
   const matches = event.summary.match(re);
@@ -29,18 +29,18 @@ function getAssignee (event) {
     event.summary = event.summary.replace(match, ' ').trim();
 
     const trimmed = match.trim();
-    const assignee = trimmed.substring(1, trimmed.length - 1);
+    const tag = trimmed.substring(1, trimmed.length - 1);
 
-    // return a generic contributor with the assignee set to the substring
-    if (isNaN(assignee)) {
-      return { displayName: assignee };
+    // return a generic contributor with the tag set to the substring
+    if (isNaN(tag)) {
+      return { displayText: tag };
     }
 
-    // if assignee is a number, get the contributor at that index
-    return config.calendar.contributors[assignee];
+    // if tag is a number, get the contributor at that index
+    return config.calendar.tags[tag];
   }
 
-  return config.calendar.contributors.find(contributor => contributor.email === event.creator.email);
+  return config.calendar.tags.find(contributor => contributor.email === event.creator.email);
 }
 
-export default getAssignee;
+export default getTag;

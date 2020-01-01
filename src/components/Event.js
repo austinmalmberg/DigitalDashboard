@@ -2,18 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 
-import Contributor from './Contributor';
+import EventTag from './EventTag';
 
 import config from '../config';
 
 import getContextRemarks from '../helpers/timeContext';
-import getAssignee from '../helpers/contributorFlags';
+import getTag from '../helpers/eventTags';
 
 const Event = ({ event, forDate, compact }) => {
 
   const [ start, setStart ] = useState(null);
   const [ end, setEnd ] = useState(null);
-  const [ contributor, setContributor ] = useState(undefined);
+  const [ tag, setTag ] = useState(undefined);
   const [ summary, setSummary ] = useState('');
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Event = ({ event, forDate, compact }) => {
       setEnd(endRemarks);
     }
 
-    setContributor(getAssignee(event));
+    setTag(getTag(event));
     setSummary(event.summary);
 
   }, [event, forDate, compact]);
@@ -44,7 +44,7 @@ const Event = ({ event, forDate, compact }) => {
       }
 
       <div className="event--details">
-        { contributor && <Contributor contributor={ contributor } /> }
+        { tag && <EventTag tag={ tag } /> }
         <h3 className="event--summary">{ summary }</h3>
       </div>
     </div>
