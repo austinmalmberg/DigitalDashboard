@@ -1,6 +1,6 @@
 ## Introduction
 
-A React web application that provides and easy-to-view interface for daily and weekly weather and events. This application uses the Google Calendar API for calendar events and the Dark Sky API for weather.
+A React application that provides a convenient display for upcoming Google Calendar events and weather. This application uses the Google Calendar API for calendar events and the Dark Sky API for weather.
 
 ## Setup
 
