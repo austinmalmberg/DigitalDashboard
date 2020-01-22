@@ -54,4 +54,10 @@ async function loadCalendarEvents(eventsListener) {
   eventsListener(response.result.items);
 }
 
-export { loadApiClient, loadCalendarEvents, signIn, signOut };
+async function getEventColors(colorListener) {
+  const response = await gapi.client.calendar.colors.get();
+
+  colorListener(response.result.event);
+}
+
+export { loadApiClient, loadCalendarEvents, getEventColors, signIn, signOut };

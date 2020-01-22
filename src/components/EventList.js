@@ -2,7 +2,7 @@ import React from 'react';
 
 import Event from './Event';
 
-const EventList = ({ events, forDate, compact }) => {
+const EventList = ({ events, eventColors, forDate, compact }) => {
 
   if (!events) {
     return (
@@ -16,6 +16,7 @@ const EventList = ({ events, forDate, compact }) => {
         <Event
           key={ key }
           event={ event }
+          eventColors={ eventColors }
           forDate={ forDate }
           compact={ compact }
         />

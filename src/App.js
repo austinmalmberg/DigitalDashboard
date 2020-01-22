@@ -6,7 +6,7 @@ import DailySnapshot from './components/DailySnapshot';
 
 import getLocation from './apis/geolocation';
 import getWeather from './apis/darkSkyApi';
-import { loadApiClient, loadCalendarEvents } from './apis/googleCalendarApi';
+import { loadApiClient, loadCalendarEvents, getEventColors } from './apis/googleCalendarApi';
 
 import config from './config';
 import { addDays, getStartingDateTime } from './helpers/dateTime';
@@ -18,6 +18,7 @@ const App = () => {
 
   const [ signedIn, setSignedIn ] = useState(false);
   const [ events, setEvents ] = useState([]);
+  const [ eventColors, setEventColors] = useState({});
 
   const [ location, setLocation ] = useState(null);
   const [ weatherData, setWeatherData ] = useState(null);
@@ -57,6 +58,8 @@ const App = () => {
     let intervalId;
 
     if (signedIn) {
+      getEventColors(setEventColors);
+
       // load calendar events
       loadCalendarEvents(setEvents);
       intervalId = setInterval(() => loadCalendarEvents(setEvents), process.env.CALENDAR_SYNC_INTERVAL || 5 * 60 * 1000);
@@ -87,6 +90,7 @@ const App = () => {
         <DailySnapshot
           forDate={ date }
           events={ events }
+          eventColors={ eventColors }
           weatherData={ weatherData }
           theme={ theme }
           setTheme={ setTheme }
@@ -102,6 +106,7 @@ const App = () => {
             key={ key }
             forDate={ futureDate }
             events={ events }
+            eventColors={ eventColors }
             weatherData={ weatherData }
             theme={ theme }
           />

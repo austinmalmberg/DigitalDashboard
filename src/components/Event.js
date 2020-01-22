@@ -2,16 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 
-import EventTag from './EventTag';
-
 import getContextRemarks from '../helpers/timeContext';
-import getTag from '../helpers/eventTags';
 
-const Event = ({ event, forDate, compact }) => {
+const Event = ({ event, eventColors, forDate, compact }) => {
 
   const [ start, setStart ] = useState(null);
   const [ end, setEnd ] = useState(null);
-  const [ tag, setTag ] = useState(undefined);
   const [ summary, setSummary ] = useState('');
 
   useEffect(() => {
@@ -27,13 +23,14 @@ const Event = ({ event, forDate, compact }) => {
       setEnd(endRemarks);
     }
 
-    setTag(getTag(event));
     setSummary(event.summary);
 
   }, [event, forDate, compact]);
 
   return (
-    <div className="event">
+    <div className="event" style={ {
+      backgroundColor: eventColors[event.colorId].background,
+      color: eventColors[event.colorId].foreground }}>
       { (start || end) &&
         <div className="event--time muted">
           { start && <p>{ start }</p> }
@@ -42,7 +39,6 @@ const Event = ({ event, forDate, compact }) => {
       }
 
       <div className="event--details">
-        { tag && <EventTag tag={ tag } /> }
         <h3 className="event--summary">{ summary }</h3>
       </div>
     </div>
