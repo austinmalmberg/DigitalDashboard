@@ -18,7 +18,7 @@ function loadApiClient(signInListener) {
 
 async function initClient(signInListener) {
   await gapi.client.init({
-    apiKey: process.env.GOOGLE_CALENDAR_API_KEY,
+      apiKey: process.env.REACT_APP_GOOGLE_CALENDAR_API_KEY,
     clientId: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
