@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { addSkyconToCanvas, setColor } from '../helpers/skycons';
+import addSkyconToCanvas from '../helpers/skycons';
 
 import getTheme from '../helpers/themes';
 
@@ -22,7 +22,6 @@ const Weather = ({ weather, setTheme, compact }) => {
 
     if (currentWeather && setTheme) {
       const theme = getTheme(currentWeather.icon);
-      setColor(theme.header.color);
       addSkyconToCanvas(canvas.current, currentWeather.icon);
       setTheme(theme);
 

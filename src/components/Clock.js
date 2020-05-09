@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { formatTime, isSameDate, getStartingDateTime } from '../helpers/dateTime';
 
-import config from '../config';
+import { session_config } from '../config';
 
 const Clock = ({ appDate, setAppDate, theme }) => {
 
@@ -11,14 +11,14 @@ const Clock = ({ appDate, setAppDate, theme }) => {
   const formatOptions = {
     hour: 'numeric',
     minute: '2-digit',
-    hour12: !config.militaryTime,
+    hour12: !session_config.militaryTime,
   };
-  if (config.displaySeconds)
+  if (session_config.displaySeconds)
     formatOptions.second = '2-digit';
 
   useEffect(() => {
     const now = new Date();
-    const updateInterval = config.displaySeconds ? 1000 : 1000 * 60;
+    const updateInterval = session_config.displaySeconds ? 1000 : 1000 * 60;
     const [ timeoutId, intervalId ] = syncClocks(now, updateInterval);
 
     // syncs the interval with the system clock so they tick together

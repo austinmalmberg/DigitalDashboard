@@ -1,5 +1,5 @@
 
-import config from '../config';
+import { session_config } from '../config';
 
 /**
  * Returns the person responsible for the event. This is determined by the
@@ -37,10 +37,10 @@ function getTag (event) {
     }
 
     // if tag is a number, get the contributor at that index
-    return config.calendar.tags[tag];
+    return session_config.calendar.tags[tag];
   }
 
-  return config.calendar.tags.find(contributor => contributor.email === event.creator.email);
+  return session_config.calendar.tags.find(contributor => contributor.email === event.creator.email);
 }
 
 export default getTag;

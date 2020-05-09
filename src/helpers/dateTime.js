@@ -1,5 +1,5 @@
 
-import config from '../config';
+import { session_config } from '../config';
 
 /**
  * Returns the time from the date specified.  If no date is given, returns the
@@ -24,10 +24,10 @@ function formatTime(date, options) {
     options = {
       hour: 'numeric',
       minute: '2-digit',
-      hour12: !config.militaryTime,
+      hour12: !session_config.militaryTime,
     };
   } else if (!options.hour12) {
-    options.hour12 = !config.militaryTime;
+    options.hour12 = !session_config.militaryTime;
   }
 
   return date.toLocaleTimeString(undefined, options);

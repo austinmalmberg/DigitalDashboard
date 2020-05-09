@@ -1,5 +1,5 @@
 
-import config from '../config';
+import { session_config } from '../config';
 
 import { addDays, getStartingDateTime } from '../helpers/dateTime';
 
@@ -43,9 +43,9 @@ async function loadCalendarEvents(eventsListener) {
   const now = new Date();
 
   const response = await gapi.client.calendar.events.list({
-    'calendarId': config.calendar.calendarId || 'primary',
+    'calendarId': session_config.calendar.calendarId || 'primary',
     'timeMin': (getStartingDateTime(now)).toISOString(),
-    'timeMax': (addDays(now, config.calendar.daysToSync || 7)).toISOString(),
+    'timeMax': (addDays(now, session_config.calendar.daysToSync || 7)).toISOString(),
     'showDeleted': false,
     'singleEvents': true,
     'orderBy': 'startTime'

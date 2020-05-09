@@ -28,9 +28,9 @@ const Event = ({ event, eventColors, forDate, compact }) => {
   }, [event, forDate, compact]);
 
   return (
-    <div className="event" style={ {
+    <div className="event" style={ event.colorId && {
       backgroundColor: eventColors[event.colorId].background,
-      color: eventColors[event.colorId].foreground }}>
+      color: eventColors[event.colorId].foreground } }>
       { (start || end) &&
         <div className="event--time muted">
           { start && <p>{ start }</p> }
