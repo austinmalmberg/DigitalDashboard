@@ -1,5 +1,5 @@
 
-const config = {
+const session_config = {
   militaryTime: false, // Default: false
   displaySeconds: false, // Default: false
   calendar: {
@@ -8,4 +8,9 @@ const config = {
   }
 };
 
-export default config;
+const endpoints = {
+    WEATHER: '/darksky',
+    GOOGLE_CALENDAR: '/calendar'
+}
+
+export { session_config, endpoints };
