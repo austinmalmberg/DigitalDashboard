@@ -5,6 +5,7 @@ import Authorization from './components/Authorization';
 import DailySnapshot from './components/DailySnapshot';
 
 import getWeather from './apis/weatherApi';
+import { defaultTheme } from './helpers/themes';
 import { loadApiClient, loadCalendarEvents, getEventColors } from './apis/googleCalendarApi';
 
 import { session_config } from './config';
@@ -20,7 +21,7 @@ const App = () => {
     const [ eventColors, setEventColors] = useState({});
 
     const [ weatherData, setWeatherData ] = useState(null);
-    const [ theme, setTheme ] = useState(null);
+    const [ theme, setTheme ] = useState(defaultTheme());
 
     // onload, get calendar events and weather
     useEffect(() => {

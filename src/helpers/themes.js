@@ -1,3 +1,4 @@
+const DEFAULT_THEME = "partly-cloudy-day";
 
 const themes = {
   "rain": {
@@ -200,8 +201,12 @@ const themes = {
   },
 };
 
+function defaultTheme() {
+    return themes[DEFAULT_THEME];
+}
+
 function getTheme(name) {
   return themes[name];
 }
 
-export default getTheme;
+export { getTheme, defaultTheme };
